@@ -16,13 +16,11 @@ download or clone the repo, then move it into the location where you want to ini
 
 assuming you have `Node` installed:
 
-run:
-
 ```zsh
 node init.js "name" "mode"
 ```
 
-or for bun:
+or assuming you have `Bun` installed:
 
 ```zsh
 bun init.js "name" "mode"
