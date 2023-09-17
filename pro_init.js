@@ -30,16 +30,16 @@ const createProject = async (name, mode) => {
 	// Install dependencies
 	const installDependencies = (installWith, dependencyType, dependencyList) => {
 		if (installWith === 'bun' && dependencyType === 'dep') {
-			execSync(`bun install -f ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+			execSync(`bun install -f ${dependencyList.join(' ')}`);
 		}
 		if (installWith === 'bun' && dependencyType === 'dev') {
-			execSync(`bun install -d -f ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+			execSync(`bun install -d -f ${dependencyList.join(' ')}`);
 		}
 		if (installWith === 'npm' && dependencyType === 'dev') {
-			execSync(`npm install ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+			execSync(`npm install ${dependencyList.join(' ')}`);
 		}
 		if (installWith === 'npm' && dependencyType === 'dev') {
-			execSync(`npm install --save-dev ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+			execSync(`npm install --save-dev ${dependencyList.join(' ')}`);
 		}
 	};
 
@@ -92,7 +92,6 @@ const createProject = async (name, mode) => {
 		start: 'node ./bin/www',
 		dev: 'npx nodemon ./bin/www',
 		debug: 'DEBUG=* npx nodemon ./bin/www',
-		test: 'TESATING',
 	};
 	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
 
@@ -138,6 +137,8 @@ const createProject = async (name, mode) => {
 	);
 	const gitIgnore = await response.text();
 	fs.writeFile('.gitignore', gitIgnore);
+
+	console.log('Initialized!');
 };
 
 const name = process.argv[2];
@@ -147,7 +148,10 @@ if (!name) {
 	console.error('provide a name');
 	process.exit();
 }
+if (!mode) {
+	console.error('provide a mode');
+	process.exit();
+}
 
 // calling the project create process
 createProject(name, mode);
-console.log('Initialized!');
