@@ -117,7 +117,7 @@ const createProject = async (name, mode) => {
 		},
 		rules: {},
 	};
-	fs.writeFile('.eslintrc.json', JSON.stringify(eslintConfig, null, 2));
+	fs.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
 
 	// Create the prettier configuration
 	const prettierConfig = {
@@ -126,12 +126,13 @@ const createProject = async (name, mode) => {
 		singleQuote: true,
 		singleAttributePerLine: true,
 	};
-	fs.writeFile('.prettierrc.json', JSON.stringify(prettierConfig, null, 2));
+	fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
 
 	// Create README.md
 	fs.writeFile('README.md', `# ${name}`);
 
 	// Add .gitignore
+	// gitignore.io for easy modularity
 	const response = await fetch(
 		'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative',
 	);
