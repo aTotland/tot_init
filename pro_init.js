@@ -1,22 +1,54 @@
 const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
 
-async function createProject(name) {
+execSync('npm install -g bun');
+execSync('bun install -g fs-extra');
+
+const path = require('path');
+const fs = require('fs-extra');
+
+const createProject = async (name, mode) => {
 	console.log(`Initializing project ${name}...`);
 
-	// Create and move process into directory
-	fs.mkdirSync(name);
-	process.chdir(name);
+	// Create and cd process into directory
+	const makeDir = (dirName) => {
+		try {
+			fs.mkdirpSync(dirName);
+		} catch (error) {
+			console.log(error);
+		}
+		try {
+			process.chdir(dirName);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	makeDir(name);
 
 	// Initialize npm with basic options
 	execSync('npm init -y');
 
 	// Install dependencies
+	const installDependencies = (installWith, dependencyType, dependencyList) => {
+		if (installWith === 'bun' && dependencyType === 'dep') {
+			execSync(`bun install -f ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+		}
+		if (installWith === 'bun' && dependencyType === 'dev') {
+			execSync(`bun install -d -f ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+		}
+		if (installWith === 'npm' && dependencyType === 'dev') {
+			execSync(`npm install ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+		}
+		if (installWith === 'npm' && dependencyType === 'dev') {
+			execSync(`npm install --save-dev ${dependencyList.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
+		}
+	};
+
+	// dependencyList
 	const myDependencies = [
 		'axios',
 		'body-parser',
 		'bootstrap',
+		'bun',
 		'connect-ensure-login',
 		'connect-sqlite3',
 		'cookie-parser',
@@ -39,13 +71,7 @@ async function createProject(name) {
 		'validator',
 	];
 
-	execSync(`npm install ${myDependencies.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
-	// myDependencies.forEach((element) => {
-	//   console.log(`installing dependency: ${element}`);
-	//   execSync(`npm install ${element}`);
-	// });
-
-	// Install dev dependencies
+	// devDependencyList
 	const myDevDependencies = [
 		'eslint',
 		'eslint-config-airbnb',
@@ -53,21 +79,22 @@ async function createProject(name) {
 		'nodemon',
 		'prettier',
 	];
-	execSync(`npm install --save-dev ${myDevDependencies.join(' ')}`); // USE THIS FOR FASTER EXEC - NO LOGS
-	// myDevDependencies.forEach((element) => {
-	//   console.log(`installing dev dependency: ${element}`);
-	//   execSync(`npm install --save-dev ${element}`);
-	// });
+
+	installDependencies(mode, 'dep', myDependencies);
+	installDependencies(mode, 'dev', myDevDependencies);
 
 	// Add scripts to package.json
 	const pathToPackageJson = path.join(process.cwd(), 'package.json');
-	const packageJson = require(pathToPackageJson);
+
+	// const packageJson = require(pathToPackageJson);
+	const packageJson = fs.readJSONSync(pathToPackageJson);
 	packageJson.scripts = {
 		start: 'node ./bin/www',
 		dev: 'npx nodemon ./bin/www',
 		debug: 'DEBUG=* npx nodemon ./bin/www',
+		test: 'TESATING',
 	};
-	fs.writeFileSync(pathToPackageJson, JSON.stringify(packageJson, null, 2));
+	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
 
 	// Create the nodemon configuration
 	const nodemonConfig = {
@@ -75,7 +102,7 @@ async function createProject(name) {
 		ext: '.js',
 		ignore: [],
 	};
-	fs.writeFileSync('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
+	fs.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
 
 	// Create the eslint configuration
 	const eslintConfig = {
@@ -91,7 +118,7 @@ async function createProject(name) {
 		},
 		rules: {},
 	};
-	fs.writeFileSync('.eslintrc.json', JSON.stringify(eslintConfig, null, 2));
+	fs.writeFile('.eslintrc.json', JSON.stringify(eslintConfig, null, 2));
 
 	// Create the prettier configuration
 	const prettierConfig = {
@@ -100,25 +127,27 @@ async function createProject(name) {
 		singleQuote: true,
 		singleAttributePerLine: true,
 	};
-	fs.writeFileSync('.prettierrc.json', JSON.stringify(prettierConfig, null, 2));
+	fs.writeFile('.prettierrc.json', JSON.stringify(prettierConfig, null, 2));
 
 	// Create README.md
-	fs.writeFileSync('README.md', `# ${name}`);
+	fs.writeFile('README.md', `# ${name}`);
 
 	// Add .gitignore
 	const response = await fetch(
 		'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative',
 	);
 	const gitIgnore = await response.text();
-	fs.writeFileSync('.gitignore', gitIgnore);
-}
+	fs.writeFile('.gitignore', gitIgnore);
+};
 
 const name = process.argv[2];
+const mode = process.argv[3];
 
 if (!name) {
 	console.error('provide a name');
 	process.exit();
 }
 
-createProject(name);
-console.log('initialized!');
+// calling the project create process
+createProject(name, mode);
+console.log('Initialized!');
