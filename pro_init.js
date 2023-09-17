@@ -35,7 +35,7 @@ const createProject = async (name, mode) => {
 		if (installWith === 'bun' && dependencyType === 'dev') {
 			execSync(`bun install -d -f ${dependencyList.join(' ')}`);
 		}
-		if (installWith === 'npm' && dependencyType === 'dev') {
+		if (installWith === 'npm' && dependencyType === 'dep') {
 			execSync(`npm install ${dependencyList.join(' ')}`);
 		}
 		if (installWith === 'npm' && dependencyType === 'dev') {
