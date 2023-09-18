@@ -76,16 +76,6 @@ const createProject = async (name) => {
 	installDependencies('dep');
 	installDependencies('dev');
 
-	// Add scripts to package.json
-	const pathToPackageJson = path.join(process.cwd(), 'package.json');
-	const packageJson = await fs.readJSON(pathToPackageJson);
-	packageJson.scripts = {
-		start: 'node ./bin/www',
-		dev: 'npx nodemon ./bin/www',
-		debug: 'DEBUG=* npx nodemon ./bin/www',
-	};
-	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
-
 	// Create the nodemon configuration
 	const nodemonConfig = {
 		watch: '.',
@@ -112,15 +102,28 @@ const createProject = async (name) => {
 
 	// Create the prettier configuration
 	const prettierConfig = {
-		trailingComma: 'es5',
 		printWidth: 100,
-		singleQuote: true,
+		trailingComma: 'es5',
 		singleAttributePerLine: true,
+		singleQuote: true,
+		bracketSpacing: true,
+		useTabs: true,
+		tabWidth: 2,
 	};
 	fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
 
 	// Create README.md
 	fs.writeFile('README.md', `# ${name}`);
+
+	// Add scripts to package.json
+	const pathToPackageJson = path.join(process.cwd(), 'package.json');
+	const packageJson = await fs.readJSON(pathToPackageJson);
+	packageJson.scripts = {
+		start: 'node ./bin/www',
+		dev: 'npx nodemon ./bin/www',
+		debug: 'DEBUG=* npx nodemon ./bin/www',
+	};
+	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
 
 	// Add .gitignore
 	// gitignore.io for easy modularity
