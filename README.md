@@ -1,6 +1,6 @@
 # tot_init
 
-### a personal init setup
+### a custom setup to quickly get my settings right for new projects
 
 I was getting tired of manually setting up my projects with eslint rules etc
 
