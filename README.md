@@ -15,7 +15,7 @@ download or clone the repo,and move it into the location where you want to initi
 assuming you have `Node` installed:
 
 ```zsh
-node init.js "name"
+node init "name"
 ```
 
 replace "name" with your preferred project name
