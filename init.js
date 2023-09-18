@@ -1,6 +1,9 @@
 const { execSync } = require('child_process');
 
+// bun faster ?
 execSync('npm install -g bun');
+
+// fs-extra is just better
 execSync('bun install -g fs-extra');
 
 const path = require('path');
