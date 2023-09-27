@@ -1,145 +1,165 @@
 const { execSync } = require('child_process');
 
 // fs-extra is just better
-execSync('npm install -g fs-extra');
+
+try {
+  execSync('npm install -g fs-extra');
+} catch (error) {
+  console.log(error);
+}
 
 const path = require('path');
 const fs = require('fs-extra');
 
 const createProject = async (name) => {
-	console.log(`Initializing project ${name}...`);
+  console.log(`Initializing project ${name}...`);
 
-	// Create and cd process into directory
-	const makeDir = (dirName) => {
-		try {
-			fs.mkdirpSync(dirName);
-		} catch (error) {
-			console.log(error);
-		}
-		try {
-			process.chdir(dirName);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-	makeDir(name);
+  // Create and cd process into directory
+  const makeDir = (dirName) => {
+    try {
+      fs.mkdirpSync(dirName);
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      process.chdir(dirName);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  makeDir(name);
 
-	// dependencyList
-	const myDependencies = [
-		'axios',
-		'body-parser',
-		'bootstrap',
-		'connect-ensure-login',
-		'connect-sqlite3',
-		'cookie-parser',
-		'cookie-session',
-		'debug',
-		'dotenv',
-		'ejs',
-		'express',
-		'express-rate-limit',
-		'express-session',
-		'express-validator',
-		'fs-extra',
-		'helmet',
-		'http-errors',
-		'morgan',
-		'passport',
-		'passport-local',
-		'pluralize',
-		'sqlite3',
-		'validator',
-	];
+  // dependencyList
+  const myDependencies = [
+    'axios',
+    'body-parser',
+    'bootstrap',
+    'bootstrap-icons',
+    'connect-ensure-login',
+    'connect-sqlite3',
+    'cookie-parser',
+    'cookie-session',
+    'dotenv',
+    'debug',
+    'ejs',
+    'express',
+    'express-session',
+    'express-validator',
+    'express-rate-limit',
+    'fs-extra',
+    'http-errors',
+    'helmet',
+    'morgan',
+    'passport',
+    'passport-local',
+    'pluralize',
+    'sqlite3',
+    'validator',
+  ];
 
-	// devDependencyList
-	const myDevDependencies = [
-		'eslint',
-		'eslint-config-airbnb',
-		'eslint-config-prettier',
-		'nodemon',
-		'prettier',
-	];
+  // devDependencyList
+  const myDevDependencies = [
+    'eslint',
+    'eslint-config-airbnb',
+    'eslint-config-prettier',
+    'nodemon',
+    'prettier',
+  ];
 
-	// Initialize npm with basic options
-	execSync('npm init -y');
+  // Initialize npm with basic options
 
-	// Install dependencies
-	const installDependencies = (dependencyType) => {
-		if (dependencyType === 'dep') {
-			execSync(`npm install ${myDependencies.join(' ')}`);
-		}
-		if (dependencyType === 'dev') {
-			execSync(`npm install --save-dev ${myDevDependencies.join(' ')}`);
-		}
-	};
+  try {
+    execSync('npm init -y');
+  } catch (error) {
+    console.log(error);
+  }
 
-	installDependencies('dep');
-	installDependencies('dev');
+  // Install dependencies
+  const installDependencies = (dependencyType) => {
+    if (dependencyType === 'dep') {
+      try {
+        execSync(`npm install ${myDependencies.join(' ')}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-	// Create the nodemon configuration
-	const nodemonConfig = {
-		watch: '.',
-		ext: '.js',
-		ignore: [],
-	};
-	fs.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
+    if (dependencyType === 'dev') {
+      try {
+        execSync(`npm install --save-dev ${myDevDependencies.join(' ')}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
-	// Create the eslint configuration
-	const eslintConfig = {
-		env: {
-			browser: true,
-			commonjs: true,
-			es2021: true,
-			node: true,
-		},
-		extends: ['eslint:recommended', 'airbnb', 'prettier'],
-		parserOptions: {
-			ecmaVersion: 'latest',
-		},
-		rules: {},
-	};
-	fs.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
+  installDependencies('dep');
+  installDependencies('dev');
 
-	// Create the prettier configuration
-	const prettierConfig = {
-		printWidth: 100,
-		trailingComma: 'es5',
-		singleAttributePerLine: true,
-		singleQuote: true,
-		bracketSpacing: true,
-		useTabs: true,
-		tabWidth: 2,
-	};
-	fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
+  // Create the nodemon configuration
+  const nodemonConfig = {
+    watch: '.',
+    ext: '.js',
+    ignore: [],
+  };
+  fs.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
 
-	// Create README.md
-	fs.writeFile('README.md', `# ${name}`);
+  // Create the eslint configuration
+  const eslintConfig = {
+    env: {
+      browser: true,
+      commonjs: true,
+      es2021: true,
+      node: true,
+    },
+    extends: ['eslint:recommended', 'airbnb', 'prettier'],
+    parserOptions: {
+      ecmaVersion: 'latest',
+    },
+    rules: {},
+  };
+  fs.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
 
-	// Add scripts to package.json
-	const pathToPackageJson = path.join(process.cwd(), 'package.json');
-	const packageJson = await fs.readJSON(pathToPackageJson);
-	packageJson.scripts = {
-		start: 'node ./bin/www',
-		dev: 'npx nodemon ./bin/www',
-		debug: 'DEBUG=* npx nodemon ./bin/www',
-	};
-	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
+  // Create the prettier configuration
+  const prettierConfig = {
+    printWidth: 100,
+    trailingComma: 'es5',
+    singleAttributePerLine: true,
+    singleQuote: true,
+    bracketSpacing: true,
+    useTabs: true,
+    tabWidth: 2,
+  };
+  fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
 
-	// Add .gitignore
-	// gitignore.io for easy modularity
-	const response = await fetch(
-		'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative',
-	).then((res) => res.text());
-	fs.writeFile('.gitignore', response);
+  // Create README.md
+  fs.writeFile('README.md', `# ${name}`);
 
-	console.log('Initialized!');
+  // Add scripts to package.json
+  const pathToPackageJson = path.join(process.cwd(), 'package.json');
+  const packageJson = await fs.readJSON(pathToPackageJson);
+  packageJson.scripts = {
+    start: 'node ./bin/www',
+    dev: 'npx nodemon ./bin/www',
+    debug: 'DEBUG=* npx nodemon ./bin/www',
+  };
+  fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
+
+  // Add .gitignore
+  // gitignore.io for easy modularity
+  const gitIgnoreConfig = await fetch(
+    'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative'
+  ).then((res) => res.text());
+  fs.writeFile('.gitignore', gitIgnoreConfig);
+
+  console.log('Initialized!');
 };
 
 const name = process.argv[2];
 
 if (!name) {
-	console.error('Project name must be provided!');
-	process.exit();
+  console.error('Project name must be provided!');
+  process.exit();
 }
 
 // calling the project create process
