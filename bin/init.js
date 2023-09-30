@@ -156,7 +156,7 @@ const createProject = async (projectName) => {
 		upgrade: 'npm-check -u && npm audit fix',
 		lint: 'npm run lint:fix && npm run prettify',
 		'lint:fix': 'eslint --fix .',
-		prettify: 'prettier . --write',
+		prettify: 'prettier --write .',
 		release: 'bumpp -r --all --commit="release: %s" --tag="%s"',
 	};
 	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
