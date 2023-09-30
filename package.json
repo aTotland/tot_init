@@ -1,6 +1,6 @@
 {
   "name": "tot_init",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "description": "automating my project initialization",
   "main": ".bin/init.js",
