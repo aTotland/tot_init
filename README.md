@@ -1,6 +1,6 @@
 # tot_init
 
-## a custom setup to quickly get my settings right for new projects
+## quickly get my settings right for my projects
 
 I was getting tired of manually setting up my projects with eslint rules etc
 
@@ -15,5 +15,7 @@ so I figured I would automate it a bit
 use `npx`:
 
 ```
-npx tot_init
+npx tot_init ${name}
 ```
+
+${name} is optional - if not provided it will use current directory

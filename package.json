@@ -1,31 +1,43 @@
 {
-  "name": "tot_init",
-  "version": "1.0.4",
-  "private": false,
-  "description": "automating my project initialization",
-  "main": ".bin/init.js",
-  "bin": {
-    "tot_init": "bin/init.js"
-  },
-  "scripts": {
-    "upgrade": "npm-check -u && npm audit fix",
-    "release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aTotland/tot_init.git"
-  },
-  "author": "A. Totland",
-  "license": "GNU GPLv3",
-  "dependencies": {
-    "fs-extra": "^11.1.1"
-  },
-  "devDependencies": {
-    "bumpp": "^9.2.0",
-    "npm-check": "^6.0.1"
-  },
-  "bugs": {
-    "url": "https://github.com/aTotland/tot_init/issues"
-  },
-  "homepage": "https://github.com/aTotland/tot_init#readme"
+	"name": "tot_init",
+	"version": "1.0.4",
+	"description": "automating my project initialization",
+	"main": ".bin/init.js",
+	"bin": {
+		"tot_init": "bin/init.js"
+	},
+	"scripts": {
+		"upgrade": "npm-check -u && npm audit fix",
+		"lint": "npm run lint:fix && npm run prettier",
+		"lint:fix": "eslint --fix .",
+		"prettier": "prettier . --write",
+		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
+	},
+	"packageManager": "npm@10.1.0",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aTotland/tot_init.git"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
+	},
+	"author": "A. Totland",
+	"license": "MIT",
+	"private": false,
+	"dependencies": {
+		"fs-extra": "^11.1.1"
+	},
+	"devDependencies": {
+		"bumpp": "^9.2.0",
+		"eslint": "^8.50.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-prettier": "^9.0.0",
+		"npm-check": "^6.0.1",
+		"prettier": "^3.0.3"
+	},
+	"bugs": {
+		"url": "https://github.com/aTotland/tot_init/issues"
+	},
+	"homepage": "https://github.com/aTotland/tot_init#readme"
 }
