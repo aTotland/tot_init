@@ -1,7 +1,10 @@
+#!/usr/bin/env node
+
 const { execSync } = require('child_process');
 
-// fs-extra is just better
+const name = process.argv.slice(2).toString();
 
+// fs-extra is just better
 try {
   execSync('npm install -g fs-extra');
 } catch (error) {
@@ -11,8 +14,8 @@ try {
 const path = require('path');
 const fs = require('fs-extra');
 
-const createProject = async (name) => {
-  console.log(`Initializing project ${name}...`);
+const createProject = async (projectName) => {
+  console.log(`Initializing project ${projectName}...`);
 
   // Create and cd process into directory
   const makeDir = (dirName) => {
@@ -27,7 +30,7 @@ const createProject = async (name) => {
       console.log(error);
     }
   };
-  makeDir(name);
+  makeDir(projectName);
 
   // dependencyList
   const myDependencies = [
@@ -133,7 +136,7 @@ const createProject = async (name) => {
   fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
 
   // Create README.md
-  fs.writeFile('README.md', `# ${name}`);
+  fs.writeFile('README.md', `# ${projectName}`);
 
   // Add scripts to package.json
   const pathToPackageJson = path.join(process.cwd(), 'package.json');
@@ -154,8 +157,6 @@ const createProject = async (name) => {
 
   console.log('Initialized!');
 };
-
-const name = process.argv[2];
 
 if (!name) {
   console.error('Project name must be provided!');
