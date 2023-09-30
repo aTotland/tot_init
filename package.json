@@ -4,7 +4,9 @@
   "private": false,
   "description": "automating my project initialization",
   "main": ".bin/init.js",
-  "bin": "./bin/init.js",
+  "bin": {
+    "tot_init": "bin/init.js"
+  },
   "scripts": {
     "upgrade": "npm-check -u && npm audit fix",
     "release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
