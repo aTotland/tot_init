@@ -2,8 +2,6 @@
 
 const { execSync } = require('child_process');
 
-const name = process.argv.slice(2).toString();
-
 // fs-extra is just better
 try {
   execSync('npm install -g fs-extra');
@@ -13,6 +11,9 @@ try {
 
 const path = require('path');
 const fs = require('fs-extra');
+
+const name = __dirname.toString();
+// const name = process.argv.slice(2).toString();
 
 const createProject = async (projectName) => {
   console.log(`Initializing project ${projectName}...`);
@@ -62,10 +63,12 @@ const createProject = async (projectName) => {
 
   // devDependencyList
   const myDevDependencies = [
+    'bumpp',
     'eslint',
     'eslint-config-airbnb',
     'eslint-config-prettier',
     'nodemon',
+    'npm-check',
     'prettier',
   ];
 
@@ -151,7 +154,7 @@ const createProject = async (projectName) => {
   // Add .gitignore
   // gitignore.io for easy modularity
   const gitIgnoreConfig = await fetch(
-    'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative'
+    'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node'
   ).then((res) => res.text());
   fs.writeFile('.gitignore', gitIgnoreConfig);
 

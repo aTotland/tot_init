@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudiocode,node,database,react,reactnative
+# Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudiocode,database,react,reactnative,node
 
 ### Database ###
 *.accdb
@@ -428,10 +428,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node,database,react,reactnative
-
-# ignore memes JSON file
-memes.json
-
-#ignore memes download folder
-public/images/memes/*
+# End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node

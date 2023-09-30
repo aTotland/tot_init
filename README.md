@@ -10,14 +10,10 @@ so I figured I would automate it a bit
 
 ## How to use:
 
-download or clone the repo,and move it into the location where you want to initiate a new project
+`cd` into your project `root dir`
 
-using `npm`:
+use `npx`:
 
-```zsh
-npm i tot_init -g
-
-npm exec tot_init name
 ```
-
-replace "name" with your preferred project name
+npx tot_init
+```
