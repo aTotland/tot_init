@@ -114,6 +114,7 @@ const createProject = async (projectName) => {
 
 	// Create the eslint configuration
 	const eslintConfig = {
+		root: true,
 		env: {
 			browser: true,
 			commonjs: true,
