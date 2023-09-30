@@ -12,8 +12,10 @@ try {
 const path = require('path');
 const fs = require('fs-extra');
 
-const name = __dirname.toString();
-// const name = process.argv.slice(2).toString();
+let name = process.argv.slice(2).toString();
+if (!name) {
+  name = __dirname.toString();
+}
 
 const createProject = async (projectName) => {
   console.log(`Initializing project ${projectName}...`);
@@ -160,11 +162,6 @@ const createProject = async (projectName) => {
 
   console.log('Initialized!');
 };
-
-if (!name) {
-  console.error('Project name must be provided!');
-  process.exit();
-}
 
 // calling the project create process
 createProject(name);
