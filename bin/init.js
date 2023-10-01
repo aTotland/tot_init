@@ -50,7 +50,7 @@ const configGitIgnore = async () => {
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
-const runConfig = () => {
+const runConfig = async () => {
 	try {
 		console.log(`Initializing ...`);
 		console.log('Setting up configuration files ...');
