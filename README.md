@@ -15,7 +15,5 @@ so I figured I would automate it a bit
 use `npx`:
 
 ```
-npx tot_init ${name}
+npx tot_init
 ```
-
-${name} is optional - if not provided it will use current directory

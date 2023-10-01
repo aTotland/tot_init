@@ -124,7 +124,7 @@ const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
 
-(() => {
+const init = () => {
 	try {
 		checkGitStatus();
 		runConfig();
@@ -135,4 +135,6 @@ const errorDisplay = (error) => {
 		errorDisplay(error);
 		revertChanges();
 	}
-})();
+};
+
+init();
