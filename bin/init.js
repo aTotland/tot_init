@@ -128,7 +128,7 @@ const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
 
-const init = () => {
+const init = async () => {
 	try {
 		checkGitStatus();
 		runConfig();
