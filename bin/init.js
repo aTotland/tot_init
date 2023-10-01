@@ -8,6 +8,7 @@ const currentDirectory = process.cwd();
 const rootDir = path.join(__dirname, '..');
 
 const config = fse.readJsonSync(path.join(rootDir, 'config/config.json'));
+const indentRule = { spaces: 2 };
 
 const revertChanges = () => {
 	console.log('Reverting changes!');
@@ -28,19 +29,24 @@ const checkGitStatus = () => {
 // Create the nodemon configuration
 const configNodemon = () => {
 	const { nodemonConfig } = config;
-	fse.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
+	fse.writeJsonSync('nodemon.json', nodemonConfig, indentRule);
 };
 
 // Create the eslint configuration
 const configEslint = () => {
 	const { eslintConfig } = config;
-	fse.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
+	fse.writeJsonSync('.eslintrc', eslintConfig, indentRule);
+};
+// Create the eslint configuration
+const configEslintIgnore = () => {
+	const { eslintIgnore } = config;
+	fse.writeJsonSync('.eslintIgnore', eslintIgnore, indentRule);
 };
 
 // Create the prettier configuration
 const configPrettier = () => {
 	const { prettierConfig } = config;
-	fse.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
+	fse.writeJsonSync('.prettierrc', prettierConfig, indentRule);
 };
 
 const configGitIgnore = async () => {
@@ -55,6 +61,7 @@ const runConfig = async () => {
 		console.log(`Initializing ...`);
 		console.log('Setting up configuration files ...');
 		configEslint();
+		configEslintIgnore();
 		configPrettier();
 		configNodemon();
 		configGitIgnore();
@@ -82,7 +89,7 @@ const addScripts = () => {
 			...scripts,
 		};
 
-		fse.writeJsonSync(packageJson, existingPackageJSON, { spaces: 2 });
+		fse.writeJsonSync(packageJson, existingPackageJSON, indentRule);
 	} catch (error) {
 		throw Error(`Could not update package.json scripts: ${error}`);
 	}
