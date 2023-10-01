@@ -2,6 +2,7 @@
 
 const fse = require('fs-extra');
 const path = require('path');
+const axios = require('axios');
 const { execSync } = require('child_process');
 
 const currentDirectory = process.cwd();
@@ -47,7 +48,8 @@ const configPrettier = () => {
 const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
-	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString())
+	const gitIgnoreConfig = axios
+		.get(config.gitIgnoreConfig.toString())
 		.then((res) => {
 			if (res.ok) {
 				return res.text();
