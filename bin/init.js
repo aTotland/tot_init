@@ -1,175 +1,136 @@
 #!/usr/bin/env node
 
+const fse = require('fs-extra');
+const path = require('path');
 const { execSync } = require('child_process');
 
-// fs-extra is just better
-try {
-	execSync('npm install -g fs-extra');
-} catch (error) {
-	console.log(error);
-}
+const currentDirectory = process.cwd();
+const rootDir = path.join(__dirname, '..');
 
-const path = require('path');
-const fs = require('fs-extra');
+const config = fse.readJsonSync(path.join(rootDir, 'config/config.json'));
 
-let name = process.argv.slice(2).toString();
-if (!name) {
-	name = __dirname.toString();
-}
-
-const createProject = async (projectName) => {
-	console.log(`Initializing project ${projectName}...`);
-
-	// Create and cd process into directory
-	const makeDir = (dirName) => {
-		try {
-			fs.mkdirpSync(dirName);
-		} catch (error) {
-			console.log(error);
-		}
-		try {
-			process.chdir(dirName);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-	makeDir(projectName);
-
-	// dependencyList
-	const myDependencies = [
-		'axios',
-		'body-parser',
-		'bootstrap',
-		'bootstrap-icons',
-		'connect-ensure-login',
-		'connect-sqlite3',
-		'cookie-parser',
-		'cookie-session',
-		'dotenv',
-		'debug',
-		'ejs',
-		'express',
-		'express-session',
-		'express-validator',
-		'express-rate-limit',
-		'fs-extra',
-		'http-errors',
-		'helmet',
-		'morgan',
-		'passport',
-		'passport-local',
-		'pluralize',
-		'sqlite3',
-		'validator',
-	];
-
-	// devDependencyList
-	const myDevDependencies = [
-		'bumpp',
-		'eslint',
-		'eslint-config-airbnb',
-		'eslint-config-prettier',
-		'nodemon',
-		'npm-check',
-		'prettier',
-	];
-
-	// Initialize npm with basic options
-
-	try {
-		execSync('npm init -y');
-	} catch (error) {
-		console.log(error);
-	}
-
-	// Install dependencies
-	const installDependencies = (dependencyType) => {
-		if (dependencyType === 'dep') {
-			try {
-				execSync(`npm install ${myDependencies.join(' ')}`);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-
-		if (dependencyType === 'dev') {
-			try {
-				execSync(`npm install --save-dev ${myDevDependencies.join(' ')}`);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-	};
-
-	installDependencies('dep');
-	installDependencies('dev');
-
-	// Create the nodemon configuration
-	const nodemonConfig = {
-		watch: '.',
-		ext: '.js',
-		ignore: [],
-	};
-	fs.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
-
-	// Create the eslint configuration
-	const eslintConfig = {
-		root: true,
-		env: {
-			browser: true,
-			commonjs: true,
-			es2021: true,
-			node: true,
-		},
-		extends: ['eslint:recommended', 'airbnb', 'prettier'],
-		parserOptions: {
-			ecmaVersion: 'latest',
-		},
-		rules: {
-			'no-console': 0,
-		},
-	};
-	fs.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
-
-	// Create the prettier configuration
-	const prettierConfig = {
-		printWidth: 100,
-		trailingComma: 'es5',
-		singleAttributePerLine: true,
-		singleQuote: true,
-		bracketSpacing: true,
-		useTabs: true,
-		tabWidth: 2,
-	};
-	fs.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
-
-	// Create README.md
-	fs.writeFile('README.md', `# ${projectName}`);
-
-	// Add scripts to package.json
-	const pathToPackageJson = path.join(process.cwd(), 'package.json');
-	const packageJson = await fs.readJSON(pathToPackageJson);
-	packageJson.scripts = {
-		start: 'node ./bin/www',
-		dev: 'npx nodemon ./bin/www',
-		debug: 'DEBUG=* npx nodemon ./bin/www',
-		upgrade: 'npm-check -u && npm audit fix',
-		lint: 'npm run lint:fix && npm run prettify',
-		'lint:fix': 'eslint --fix .',
-		prettify: 'prettier --write .',
-		release: 'bumpp -r --all --commit="release: %s" --tag="%s"',
-	};
-	fs.writeFile(pathToPackageJson, JSON.stringify(packageJson, null, 2));
-
-	// Add .gitignore
-	// gitignore.io for easy modularity
-	const gitIgnoreConfig = await fetch(
-		'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node'
-	).then((res) => res.text());
-	fs.writeFile('.gitignore', gitIgnoreConfig);
-
-	console.log('Initialized!');
+const revertChanges = () => {
+	console.log('Reverting changes!');
+	execSync('git reset --hard && git clean -fd');
+	process.exit(1);
 };
 
-// calling the project create process
-createProject(name);
+// Check git status for uncommitted changes, in case of an error
+const checkGitStatus = () => {
+	const gitStatus = execSync('git status --porcelain').toString();
+	if (gitStatus.trim() !== '') {
+		console.error('There are uncommitted changes! make a new commit before running again...');
+		process.exit(1);
+	}
+	process.on('SIGINT', revertChanges);
+};
+
+// Create the nodemon configuration
+const configNodemon = () => {
+	const { nodemonConfig } = config;
+	fse.writeFile('nodemon.json', JSON.stringify(nodemonConfig, null, 2));
+};
+
+// Create the eslint configuration
+const configEslint = () => {
+	const { eslintConfig } = config;
+	fse.writeFile('.eslintrc', JSON.stringify(eslintConfig, null, 2));
+};
+
+// Create the prettier configuration
+const configPrettier = () => {
+	const { prettierConfig } = config;
+	fse.writeFile('.prettierrc', JSON.stringify(prettierConfig, null, 2));
+};
+
+const configGitIgnore = async () => {
+	// Add .gitignore
+	// gitignore.io for easy modularity
+	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) => res.text());
+	fse.writeFile('.gitignore', gitIgnoreConfig);
+};
+
+const runConfig = () => {
+	try {
+		console.log(`Initializing ...`);
+		console.log('Setting up configuration files ...');
+		configEslint();
+		configPrettier();
+		configNodemon();
+		configGitIgnore();
+	} catch (error) {
+		throw Error(`Couldn't set up configuration files: ${error}`);
+	}
+};
+
+// Add scripts to package.json
+const addScripts = () => {
+	try {
+		console.log('Updating package.json scripts ...');
+
+		const packageJson = path.join(currentDirectory, 'package.json');
+
+		if (!fse.existsSync(packageJson)) {
+			throw Error('package.json not found in the current directory.');
+		}
+
+		const existingPackageJSON = fse.readJsonSync(packageJson);
+		const { scripts } = config;
+
+		existingPackageJSON.scripts = {
+			...existingPackageJSON.scripts,
+			...scripts,
+		};
+
+		fse.writeJsonSync(packageJson, existingPackageJSON, { spaces: 2 });
+	} catch (error) {
+		throw Error(`Could not update package.json scripts: ${error}`);
+	}
+};
+
+// Install dependencies
+const installDependencies = (dependencyType) => {
+	if (dependencyType === 'dev') {
+		try {
+			console.log('Installing dev dependencies...');
+			execSync(`npm install --save-dev ${config.devDependencies.join(' ')}`);
+		} catch (error) {
+			throw Error(`Could not install dev dependencies.`);
+		}
+	}
+	try {
+		console.log('Installing dependencies ...');
+		execSync(`npm install ${config.dependencies.join(' ')}`);
+	} catch (error) {
+		throw Error(`Could not install dependencies`);
+	}
+};
+
+const runDepInstallers = () => {
+	installDependencies('dev');
+	installDependencies();
+};
+
+const successDisplay = () => {
+	console.group('success!');
+	console.log('It is recommended to add these plugins:');
+	console.log('- ESLint');
+	console.log('- Prettier');
+};
+
+const errorDisplay = (error) => {
+	console.error(`${error.message}`);
+};
+
+(() => {
+	try {
+		checkGitStatus();
+		runConfig();
+		addScripts();
+		runDepInstallers();
+		successDisplay();
+	} catch (error) {
+		errorDisplay(error);
+		revertChanges();
+	}
+})();
