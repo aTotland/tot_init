@@ -40,7 +40,7 @@ const configEslint = () => {
 // Create the eslint configuration
 const configEslintIgnore = () => {
 	const { eslintIgnore } = config;
-	fse.writeFileSync('.eslintIgnore', eslintIgnore, indentRule);
+	fse.writeFileSync('.eslintIgnore', eslintIgnore.toString().text(), indentRule);
 };
 
 // Create the prettier configuration
