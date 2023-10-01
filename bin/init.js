@@ -37,11 +37,6 @@ const configEslint = () => {
 	const { eslintConfig } = config;
 	fse.writeJsonSync('.eslintrc', eslintConfig, indentRule);
 };
-// Create the eslint configuration
-const configEslintIgnore = () => {
-	const { eslintIgnore } = config;
-	fse.writeFileSync('.eslintIgnore', eslintIgnore.toString(), indentRule);
-};
 
 // Create the prettier configuration
 const configPrettier = () => {
