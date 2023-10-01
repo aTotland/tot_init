@@ -44,17 +44,17 @@ const configPrettier = () => {
 	fse.writeJsonSync('.prettierrc', prettierConfig, indentRule);
 };
 
-const configGitIgnore = () => {
+const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
-	const gitIgnoreConfig = fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
+	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
 	// const gitIgnoreConfig = await fetch(
 	// 	'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node'
 	// ).then((res) => res.text());
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
-const runConfig = () => {
+const runConfig = async () => {
 	try {
 		console.log(`Initializing ...`);
 		console.log('Setting up configuration files ...');
@@ -128,7 +128,7 @@ const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
 
-const init = () => {
+const init = async () => {
 	try {
 		checkGitStatus();
 		runConfig();
