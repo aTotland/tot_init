@@ -60,7 +60,7 @@
 			"no-console": 0
 		}
 	},
-	"eslintIgnore": ["node_modules", "temp"],
+	"eslintIgnore": "node_modules temp",
 	"prettierConfig": {
 		"printWidth": 100,
 		"trailingComma": "es5",
