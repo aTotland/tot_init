@@ -2,7 +2,6 @@
 
 const fse = require('fs-extra');
 const path = require('path');
-const axios = require('axios');
 const { execSync } = require('child_process');
 
 const currentDirectory = process.cwd();
@@ -48,7 +47,7 @@ const configPrettier = () => {
 const configGitIgnore = () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
-	const gitIgnoreConfig = axios.get(config.gitIgnoreConfig.toString()).then((res) => res.text());
+	const gitIgnoreConfig = fetch(config.gitIgnoreConfig).then((res) => res.text());
 	// const gitIgnoreConfig = await fetch(
 	// 	'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node'
 	// ).then((res) => res.text());
