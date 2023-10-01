@@ -10,10 +10,14 @@ so I figured I would automate it a bit
 
 ## How to use:
 
-`cd` into your project `root dir`
+`cd` into your project `root dir` and run:
 
-use `npx`:
-
+```zsh
+npm i tot_init
 ```
+
+then run:
+
+```zsh
 npx tot_init
 ```
