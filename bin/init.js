@@ -92,6 +92,7 @@ const addScripts = () => {
 const installDependencies = (dependencyType) => {
 	if (dependencyType === 'dev') {
 		try {
+			console.log(config.devDependencies);
 			console.log('Installing dev dependencies...');
 			execSync(`npm install --save-dev ${config.devDependencies.join(' ')}`);
 		} catch (error) {
@@ -99,6 +100,7 @@ const installDependencies = (dependencyType) => {
 		}
 	}
 	try {
+		console.log(config.dependencies);
 		console.log('Installing dependencies ...');
 		execSync(`npm install ${config.dependencies.join(' ')}`);
 	} catch (error) {
