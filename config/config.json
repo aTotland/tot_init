@@ -9,7 +9,7 @@
 		"prettify": "prettier --write .",
 		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
 	},
-	"dependencies": [
+	"devDependencies": [
 		"bumpp",
 		"eslint",
 		"eslint-config-airbnb",
@@ -18,7 +18,7 @@
 		"npm-check",
 		"prettier"
 	],
-	"devDependencies": [
+	"dependencies": [
 		"axios",
 		"body-parser",
 		"bootstrap",
