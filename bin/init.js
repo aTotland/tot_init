@@ -40,7 +40,7 @@ const configEslint = () => {
 // Create the eslint configuration
 const configEslintIgnore = () => {
 	const { eslintIgnore } = config;
-	fse.writeJsonSync('.eslintIgnore', eslintIgnore, indentRule);
+	fse.writeFileSync('.eslintIgnore', eslintIgnore, indentRule);
 };
 
 // Create the prettier configuration
@@ -53,7 +53,7 @@ const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
 	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
-	fse.writeFile('.gitignore', gitIgnoreConfig);
+	fse.writeFileSync('.gitignore', gitIgnoreConfig);
 };
 
 const runConfig = async () => {
