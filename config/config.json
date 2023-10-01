@@ -1,0 +1,78 @@
+{
+	"scripts": {
+		"start": "node ./bin/www",
+		"dev": "npx nodemon ./bin/www",
+		"debug": "DEBUG=* npx nodemon ./bin/www",
+		"upgrade": "npm-check -u && npm audit fix",
+		"lint": "npm run lint:fix && npm run prettify",
+		"lint:fix": "eslint --fix .",
+		"prettify": "prettier --write .",
+		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
+	},
+	"dependencies": [
+		"bumpp",
+		"eslint",
+		"eslint-config-airbnb",
+		"eslint-config-prettier",
+		"nodemon",
+		"npm-check",
+		"prettier"
+	],
+	"devDependencies": [
+		"axios",
+		"body-parser",
+		"bootstrap",
+		"bootstrap-icons",
+		"connect-ensure-login",
+		"connect-sqlite3",
+		"cookie-parser",
+		"cookie-session",
+		"dotenv",
+		"debug",
+		"ejs",
+		"express",
+		"express-session",
+		"express-validator",
+		"express-rate-limit",
+		"fs-extra",
+		"http-errors",
+		"helmet",
+		"morgan",
+		"passport",
+		"passport-local",
+		"pluralize",
+		"sqlite3",
+		"validator"
+	],
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"commonjs": true,
+			"es2021": true,
+			"node": true
+		},
+		"extends": ["eslint:recommended", "airbnb", "prettier"],
+		"parserOptions": {
+			"ecmaVersion": "latest"
+		},
+		"rules": {
+			"no-console": 0
+		}
+	},
+	"prettierConfig": {
+		"printWidth": 100,
+		"trailingComma": "es5",
+		"singleAttributePerLine": true,
+		"singleQuote": true,
+		"bracketSpacing": true,
+		"useTabs": true,
+		"tabWidth": 2
+	},
+	"nodemonConfig": {
+		"watch": ".",
+		"ext": ".js",
+		"ignore": []
+	},
+	"gitIgnoreConfig": "https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node"
+}
