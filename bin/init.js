@@ -48,9 +48,6 @@ const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
 	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
-	// const gitIgnoreConfig = await fetch(
-	// 	'https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node'
-	// ).then((res) => res.text());
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
@@ -96,7 +93,6 @@ const addScripts = () => {
 const installDependencies = (dependencyType) => {
 	if (dependencyType === 'dev') {
 		try {
-			console.log(config.devDependencies);
 			console.log('Installing dev dependencies...');
 			execSync(`npm install --save-dev ${config.devDependencies.join(' ')}`);
 		} catch (error) {
@@ -104,7 +100,6 @@ const installDependencies = (dependencyType) => {
 		}
 	}
 	try {
-		console.log(config.dependencies);
 		console.log('Installing dependencies ...');
 		execSync(`npm install ${config.dependencies.join(' ')}`);
 	} catch (error) {
