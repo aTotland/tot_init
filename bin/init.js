@@ -56,7 +56,6 @@ const runConfig = async () => {
 		console.log(`Initializing ...`);
 		console.log('Setting up configuration files ...');
 		configEslint();
-		configEslintIgnore();
 		configPrettier();
 		configNodemon();
 		configGitIgnore();
