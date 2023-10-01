@@ -73,5 +73,6 @@
 		"watch": ".",
 		"ext": ".js",
 		"ignore": []
-	}
+	},
+	"gitIgnoreConfig": "https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node"
 }
