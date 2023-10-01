@@ -48,7 +48,7 @@ const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
 	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
-	fse.writeFileSync('.gitignore', gitIgnoreConfig);
+	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
 const runConfig = async () => {
