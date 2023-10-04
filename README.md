@@ -13,7 +13,7 @@ so I figured I would automate it a bit
 `cd` into your project `root dir` and run:
 
 ```zsh
-npm i tot_init
+npm i --save-dev tot_init
 ```
 
 then run:
