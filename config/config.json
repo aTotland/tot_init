@@ -15,8 +15,10 @@
 		"eslint",
 		"eslint-config-airbnb",
 		"eslint-config-prettier",
+		"eslint-doc-generator",
 		"nodemon",
 		"npm-check",
+		"npm-run-all",
 		"prettier"
 	],
 	"dependencies": [
@@ -50,7 +52,7 @@
 		"env": {
 			"browser": true,
 			"commonjs": true,
-			"es2021": true,
+			"es2023": true,
 			"node": true
 		},
 		"extends": ["eslint:recommended", "airbnb", "prettier"],
@@ -62,17 +64,18 @@
 		}
 	},
 	"prettierConfig": {
-		"printWidth": 100,
+		"printWidth": 80,
+		"useTabs": true,
+		"tabWidth": 2,
 		"trailingComma": "es5",
 		"singleAttributePerLine": true,
 		"singleQuote": true,
 		"bracketSpacing": true,
-		"useTabs": true,
-		"tabWidth": 2
+		"semi": true
 	},
 	"nodemonConfig": {
 		"watch": ".",
-		"ext": ".js",
+		"ext": ".**",
 		"ignore": []
 	},
 	"gitIgnoreConfig": "https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,database,react,reactnative,node"
