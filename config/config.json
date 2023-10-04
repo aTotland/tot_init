@@ -17,7 +17,6 @@
 		"eslint",
 		"eslint-config-airbnb",
 		"eslint-config-prettier",
-		"eslint-doc-generator",
 		"nodemon",
 		"npm-check",
 		"npm-run-all",
