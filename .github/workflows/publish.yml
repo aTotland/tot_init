@@ -1,48 +1,69 @@
-name: publish
+---
+## Publish to NPM
+name: Publish to NPM
+# Start the job on all push
 on:
   push:
-    branches:
-      - main
-    tags-ignore:
-      - '**'
-    paths-ignore:
-      - '**/*.md'
-      - LICENSE
-      - '**/*.gitignore'
-      - .editorconfig
-      - docs/**
+    branches: [main]
+    tags-ignore: ['**']
+    paths-ignore: ['**/*.md', LICENSE, '**/*.gitignore', '.github/']
   pull_request: null
-
+# Set the job
 jobs:
-  publish:
-    name: publish
+  linter:
+    # Name the Job
+    name: Lint Code Base
+    # Set the job agent
     runs-on: ubuntu-latest
-
+    # Grant status permission for MULTI_STATUS #
     permissions:
       contents: read
-      id-token: write
-
+      packages: read
+      statuses: write
+    # Load all steps
     steps:
-      - uses: actions/checkout@v3
+      # Checkout the code base #
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      # Run Linter against code base #
+      - name: Lint Code Base
+        uses: super-linter/super-linter@v5
 
-      - name: Setup node
+  publish:
+    # Name the job
+    name: Publish
+    # Set the job agent
+    runs-on: [ubuntu-latest]
+    # Grant job permissions
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+      id-token: write
+    # Load all steps
+    steps:
+      # Checkout the codebase
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      # Setup Node
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: latest
           check-latest: true
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Install the latest npm
-        run: npm install -g npm
-
+      # Install all project dependencies
       - name: Install dependencies
-        run: npm install
-
-      - name: Run lint
+        run: npm ci
+      # Run lint and format against codebase
+      - name: Run lint & format
         run: npm run lint
-
-      - name: Publish
+      # Publish  codebase to NPM
+      - name: Publish to NPM
         run: |
           if git log -1 --pretty=%B | grep "^release: [0-9]\+\.[0-9]\+\.[0-9]\+$";
           then
@@ -53,7 +74,10 @@ jobs:
           else
             echo "Not a release, skipping publish"
           fi
-
+        # ENV
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          DEFAULT_BRANCH: main
+          VALIDATE_ALL_CODEBASE: false
           NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
