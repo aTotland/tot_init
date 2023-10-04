@@ -11,9 +11,12 @@
 	},
 	"scripts": {
 		"upgrade": "npm-check -u && npm audit fix",
-		"lint": "npm run lint:fix && npm run prettify",
+		"lint": "npm-run-all \"lint:*\"",
+		"lint:js": "eslint .",
 		"lint:fix": "eslint --fix .",
-		"prettify": "prettier --write .",
+		"lint:prettier": "prettier --write .",
+		"lint:eslint-docs": "npm run update:eslint-docs -- --check",
+		"update:eslint-docs": "eslint-doc-generator",
 		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
 	},
 	"packageManager": "npm@10.1.0",
@@ -33,7 +36,9 @@
 		"eslint": "^8.50.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^9.0.0",
+		"eslint-doc-generator": "^1.4.3",
 		"npm-check": "^6.0.1",
+		"npm-run-all": "^4.1.5",
 		"prettier": "^3.0.3"
 	},
 	"bugs": {
