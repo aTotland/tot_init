@@ -1,5 +1,7 @@
 # tot_init
 
+[![GitHub Super-Linter](https://github.com/aTotland/tot_init/actions/workflows/publish/badge.svg)](https://github.com/aTotland/tot_init/actions/workflows/publish.yml)
+
 ## quickly get my settings right for my projects
 
 I was getting tired of manually setting up my projects with eslint rules etc
