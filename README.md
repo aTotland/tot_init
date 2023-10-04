@@ -23,3 +23,7 @@ then run:
 ```zsh
 npx tot_init
 ```
+
+<!-- begin auto-generated rules list -->
+
+<!-- end auto-generated rules list -->
