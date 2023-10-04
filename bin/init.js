@@ -20,7 +20,9 @@ const revertChanges = () => {
 const checkGitStatus = () => {
 	const gitStatus = execSync('git status --porcelain').toString();
 	if (gitStatus.trim() !== '') {
-		console.error('There are uncommitted changes! make a new commit before running again...');
+		console.error(
+			'There are uncommitted changes! make a new commit before running again...'
+		);
 		process.exit(1);
 	}
 	process.on('SIGINT', revertChanges);
@@ -47,7 +49,9 @@ const configPrettier = () => {
 const configGitIgnore = async () => {
 	// Add .gitignore
 	// gitignore.io for easy modularity
-	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then((res) => res.text());
+	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then(
+		(res) => res.text()
+	);
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
