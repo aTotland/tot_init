@@ -1,6 +1,6 @@
 {
 	"name": "tot_init",
-	"version": "1.0.13",
+	"version": "1.0.14-beta.0",
 	"description": "automating my project initialization",
 	"author": "A. Totland",
 	"license": "MIT",
