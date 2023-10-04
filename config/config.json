@@ -4,11 +4,13 @@
 		"dev": "npx nodemon ./bin/www",
 		"debug": "DEBUG=* npx nodemon ./bin/www",
 		"upgrade": "npm-check -u && npm audit fix",
-		"lint": "npm run lint:fix && npm run prettify",
+		"lint": "npm-run-all \"lint:*\"",
+		"lint:js": "eslint .",
 		"lint:fix": "eslint --fix .",
-		"prettify": "prettier --write .",
-		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\"",
-		"reset": "git reset --hard && git clean -fd"
+		"lint:prettier": "prettier --write .",
+		"lint:eslint-docs": "npm run update:eslint-docs -- --check",
+		"update:eslint-docs": "eslint-doc-generator",
+		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
 	},
 	"devDependencies": [
 		"bumpp",
