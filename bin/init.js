@@ -118,7 +118,7 @@ const runDepInstallers = () => {
 
 const successDisplay = () => {
 	console.group('success!');
-	console.log('It is recommended to add these plugins:');
+	console.log('It is recommended to add these editor plugins:');
 	console.log('- ESLint');
 	console.log('- Prettier');
 };
