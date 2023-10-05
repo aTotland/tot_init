@@ -8,8 +8,6 @@
 		"lint:js": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"lint:prettier": "prettier --write .",
-		"lint:eslint-docs": "npm run update:eslint-docs -- --check",
-		"update:eslint-docs": "eslint-doc-generator",
 		"release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\""
 	},
 	"devDependencies": [
