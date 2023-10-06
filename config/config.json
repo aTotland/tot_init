@@ -40,9 +40,11 @@
 		"http-errors",
 		"helmet",
 		"morgan",
+		"mysql2",
 		"passport",
 		"passport-local",
 		"pluralize",
+		"sequelize",
 		"sqlite3",
 		"validator"
 	],
