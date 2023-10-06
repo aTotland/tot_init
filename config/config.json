@@ -3,7 +3,7 @@
 		"start": "node ./server/bin/www",
 		"dev": "npx nodemon ./server/bin/www",
 		"debug": "DEBUG=* npx nodemon ./server/bin/www",
-		"upgrade": "npm-check -u && npm audit fix",
+		"up": "npm-check -u && npm audit fix",
 		"lint": "npm-run-all \"lint:*\"",
 		"lint:js": "eslint .",
 		"lint:fix": "eslint --fix .",
