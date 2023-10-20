@@ -130,7 +130,7 @@ const runConfig = () => {
 		addConfigs();
 		addDependencies();
 		configGitIgnore();
-		execSync('npm ci');
+		execSync('npm i');
 	} catch (error) {
 		throw Error(`Couldn't set up configuration files: ${error}`);
 	}
