@@ -61,8 +61,20 @@ const addConfigs = async () => {
 		existingPackageJson.scripts = {
 			...existingPackageJson.scripts,
 			...scripts,
+		};
+
+		existingPackageJson.eslintConfig = {
+			...existingPackageJson.eslintConfig,
 			...eslintConfig,
+		};
+
+		existingPackageJson.prettier = {
+			...existingPackageJson.prettier,
 			...prettier,
+		};
+
+		existingPackageJson.nodemonConfig = {
+			...existingPackageJson.nodemonConfig,
 			...nodemonConfig,
 		};
 
