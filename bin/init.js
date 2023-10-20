@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
+const latestVersion = await import('latest-version');
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
-
-const latestVersion = await import('latest-version');
 
 const currentDirectory = process.cwd();
 const rootDir = path.join(__dirname, '..');
