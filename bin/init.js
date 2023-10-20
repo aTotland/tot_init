@@ -4,8 +4,6 @@ const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
 
-const latestVersion = await import('latest-version');
-
 const currentDirectory = process.cwd();
 const rootDir = path.join(__dirname, '..');
 
@@ -31,8 +29,18 @@ const checkGitStatus = () => {
 	process.on('SIGINT', revertChanges);
 };
 
+const sortObjects = (input) => {
+	const output = {};
+	Object.keys(input)
+		.sort()
+		.forEach((key) => {
+			output[key] = input[key];
+		});
+	return output;
+};
+
+// Add .gitignore
 const configGitIgnore = async () => {
-	// Add .gitignore
 	// gitignore.io for easy modularity
 	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then(
 		(res) => res.text()
@@ -40,35 +48,24 @@ const configGitIgnore = async () => {
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
-// Add configs & dependencies to package.json
+// get path to package.json
+const packageJson = path.join(currentDirectory, 'package.json');
 
-const addConfigs = async () => {
+// Add configs to package.json
+const addConfigs = () => {
 	try {
-		console.info('Updating package.json scripts & configs ...');
-
-		const packageJson = path.join(currentDirectory, 'package.json');
-
-
+		console.info('Updating package.json scripts & configs...');
 
 		if (!fse.existsSync(packageJson)) {
-			throw Error('package.json not found in the current directory.');
+			throw Error('package.json not found in the current directory!');
 		}
 
 		const existingPackageJson = fse.readJsonSync(packageJson);
-
-		(async (existingPackageJson) => {
-			const latestVersion = (await import('latest-version')).default;
-      Object.keys(jsonObject).forEach(([key]) => {
-				console.log(latestVersion(key));
-      
-		})();
 
 		const { scripts } = config;
 		const { eslintConfig } = config;
 		const { prettier } = config;
 		const { nodemonConfig } = config;
-		const { dependencies } = config;
-		const { devDependencies } = config;
 
 		existingPackageJson.scripts = {
 			...existingPackageJson.scripts,
@@ -90,19 +87,39 @@ const addConfigs = async () => {
 			...nodemonConfig,
 		};
 
-		existingPackageJson.dependencies = {
-			...existingPackageJson.dependencies,
-			...dependencies,
-		};
-
-		existingPackageJson.devDependencies = {
-			...existingPackageJson.devDependencies,
-			...devDependencies,
-		};
-
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 	} catch (error) {
 		throw Error(`Could not update package.json: ${error}`);
+	}
+};
+
+const addDependencies = () => {
+	try {
+		console.info('Updating package.json dependencies...');
+
+		if (!fse.existsSync(packageJson)) {
+			throw Error('package.json not found in the current directory!');
+		}
+
+		const pkg = {
+			dependencies: { 'fs-extra': '^11.1.1', dotenv: '^16.3.1' },
+			devDependencies: {
+				bumpp: '^9.2.0',
+				eslint: '^8.50.0',
+				'eslint-config-airbnb': '^19.0.4',
+				'eslint-config-prettier': '^9.0.0',
+				nodemon: '^3.0.1',
+				'npm-check': '^6.0.1',
+				'npm-run-all': '^4.1.5',
+				prettier: '^3.0.3',
+				tot_init: '^1.2.5',
+			},
+		};
+		pkg.dependencies = sortObjects(pkg.dependencies);
+		pkg.devDependencies = sortObjects(pkg.devDependencies);
+		fse.writeJsonSync(packageJson, pkg, indentRule);
+	} catch (error) {
+		throw Error(`Could not add dependencies: ${error}`);
 	}
 };
 
@@ -114,10 +131,11 @@ const successDisplay = () => {
 	console.info('--> Prettier');
 };
 
-const runConfig = async () => {
+const runConfig = () => {
 	try {
 		console.info('Setting up configuration files ...');
 		addConfigs();
+		addDependencies();
 		configGitIgnore();
 	} catch (error) {
 		throw Error(`Couldn't set up configuration files: ${error}`);
@@ -129,7 +147,7 @@ const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
 
-const init = async () => {
+const init = () => {
 	try {
 		checkGitStatus();
 		runConfig();
