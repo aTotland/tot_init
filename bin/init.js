@@ -33,8 +33,8 @@ const checkGitStatus = () => {
 const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
 	try {
-		const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then(
-			(res) => res.text()
+		const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
+			res.text()
 		);
 		fse.writeFile('.gitignore', gitIgnoreConfig);
 	} catch (error) {
