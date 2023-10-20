@@ -13,20 +13,20 @@
 	},
 
 	"devDependencies": {
-		"bumpp": "^*.*.*",
-		"eslint": "^*.*.*",
-		"eslint-config-airbnb": "^*.*.*",
-		"eslint-config-prettier": "^*.*.*",
-		"nodemon": "^*.*.*",
-		"npm-check": "^*.*.*",
-		"npm-run-all": "^*.*.*",
-		"prettier": "^*.*.*",
-		"tot_init": "^*.*.*"
+		"bumpp": "^X.X.X",
+		"eslint": "^X.X.X",
+		"eslint-config-airbnb": "^X.X.X",
+		"eslint-config-prettier": "^X.X.X",
+		"nodemon": "^X.X.X",
+		"npm-check": "^X.X.X",
+		"npm-run-all": "^X.X.X",
+		"prettier": "^X.X.X",
+		"tot_init": "^X.X.X"
 	},
 
 	"dependencies": {
-		"dotenv": "^*.*.*",
-		"fs-extra": "^*.*.*"
+		"dotenv": "^X.X.X",
+		"fs-extra": "^X.X.X"
 	},
 
 	"eslintConfig": {
