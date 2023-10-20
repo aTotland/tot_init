@@ -101,23 +101,24 @@ const addDependencies = () => {
 			throw Error('package.json not found in the current directory!');
 		}
 
-		const pkg = {
-			dependencies: { 'fs-extra': '^11.1.1', dotenv: '^16.3.1' },
-			devDependencies: {
-				bumpp: '^9.2.0',
-				eslint: '^8.50.0',
-				'eslint-config-airbnb': '^19.0.4',
-				'eslint-config-prettier': '^9.0.0',
-				nodemon: '^3.0.1',
-				'npm-check': '^6.0.1',
-				'npm-run-all': '^4.1.5',
-				prettier: '^3.0.3',
-				tot_init: '^1.2.5',
-			},
+		let dependencies = { 'fs-extra': '^11.1.1', dotenv: '^16.3.1' };
+		let devDependencies = {
+			bumpp: '^9.2.0',
+			eslint: '^8.50.0',
+			'eslint-config-airbnb': '^19.0.4',
+			'eslint-config-prettier': '^9.0.0',
+			nodemon: '^3.0.1',
+			'npm-check': '^6.0.1',
+			'npm-run-all': '^4.1.5',
+			prettier: '^3.0.3',
+			tot_init: '^1.2.5',
 		};
-		pkg.dependencies = sortObjects(pkg.dependencies);
-		pkg.devDependencies = sortObjects(pkg.devDependencies);
-		fse.writeJsonSync(packageJson, pkg, indentRule);
+
+		dependencies = sortObjects(dependencies);
+		devDependencies = sortObjects(devDependencies);
+
+		fse.writeJsonSync(packageJson.dependencies, dependencies, indentRule);
+		fse.writeJsonSync(packageJson.devDependencies, devDependencies, indentRule);
 	} catch (error) {
 		throw Error(`Could not add dependencies: ${error}`);
 	}
