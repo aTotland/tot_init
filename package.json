@@ -19,6 +19,36 @@
 		"reset": "git reset --hard && git clean -fd "
 	},
 	"packageManager": "npm@10.1.0",
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"commonjs": true,
+			"es2023": true,
+			"node": true
+		},
+		"extends": [
+			"eslint:recommended",
+			"airbnb",
+			"prettier"
+		],
+		"parserOptions": {
+			"ecmaVersion": "latest"
+		},
+		"rules": {
+			"no-console": 0
+		}
+	},
+	"prettier": {
+		"printWidth": 80,
+		"useTabs": true,
+		"tabWidth": 2,
+		"trailingComma": "es5",
+		"singleAttributePerLine": true,
+		"singleQuote": true,
+		"bracketSpacing": true,
+		"semi": true
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/aTotland/tot_init.git"

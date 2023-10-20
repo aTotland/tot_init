@@ -65,7 +65,7 @@
 			"no-console": 0
 		}
 	},
-	"prettierConfig": {
+	"prettier": {
 		"printWidth": 80,
 		"useTabs": true,
 		"tabWidth": 2,
