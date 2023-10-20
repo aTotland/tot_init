@@ -45,6 +45,7 @@
 		"passport",
 		"passport-local",
 		"pluralize",
+		"pug",
 		"sequelize",
 		"sqlite3",
 		"validator"

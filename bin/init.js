@@ -38,8 +38,9 @@ const configGitIgnore = async () => {
 	fse.writeFile('.gitignore', gitIgnoreConfig);
 };
 
-// Add scripts to package.json
-const addConfigs = () => {
+// Add configs & dependencies to package.json
+
+const addConfigs = async () => {
 	try {
 		console.info('Updating package.json scripts & configs ...');
 
@@ -49,50 +50,35 @@ const addConfigs = () => {
 			throw Error('package.json not found in the current directory.');
 		}
 
-		const existingPackageJSON = fse.readJsonSync(packageJson);
+		const existingPackageJson = fse.readJsonSync(packageJson);
 		const { scripts } = config;
 		const { eslintConfig } = config;
 		const { prettier } = config;
 		const { nodemonConfig } = config;
+		const { dependencies } = config;
+		const { devDependencies } = config;
 
-		existingPackageJSON.scripts = {
-			...existingPackageJSON.scripts,
+		existingPackageJson.scripts = {
+			...existingPackageJson.scripts,
 			...scripts,
 			...eslintConfig,
 			...prettier,
 			...nodemonConfig,
 		};
 
-		fse.writeJsonSync(packageJson, existingPackageJSON, indentRule);
-	} catch (error) {
-		throw Error(`Could not update package.json scripts: ${error}`);
-	}
-};
-
-// Add dependencies
-const addDependencies = () => {
-	try {
-		console.log('Updating package.json dependencies ...');
-
-		const packageJson = path.join(currentDirectory, 'package.json');
-
-		if (!fse.existsSync(packageJson)) {
-			throw Error('package.json not found in the current directory.');
-		}
-
-		const existingPackageJSON = fse.readJsonSync(packageJson);
-		const { dependencies } = config;
-		const { devDependencies } = config;
-
-		existingPackageJSON.scripts = {
-			...existingPackageJSON.scripts,
+		existingPackageJson.dependencies = {
+			...existingPackageJson.dependencies,
 			...dependencies,
+		};
+
+		existingPackageJson.devDependencies = {
+			...existingPackageJson.devDependencies,
 			...devDependencies,
 		};
 
-		fse.writeJsonSync(packageJson, existingPackageJSON, indentRule);
+		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 	} catch (error) {
-		throw Error(`Could not update package.json dependencies: ${error}`);
+		throw Error(`Could not update package.json: ${error}`);
 	}
 };
 
@@ -108,7 +94,6 @@ const runConfig = async () => {
 	try {
 		console.info('Setting up configuration files ...');
 		addConfigs();
-		addDependencies();
 		configGitIgnore();
 	} catch (error) {
 		throw Error(`Couldn't set up configuration files: ${error}`);
