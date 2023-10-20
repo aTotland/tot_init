@@ -29,23 +29,17 @@ const checkGitStatus = () => {
 	process.on('SIGINT', revertChanges);
 };
 
-const sortObjects = (input) => {
-	const output = {};
-	Object.keys(input)
-		.sort()
-		.forEach((key) => {
-			output[key] = input[key];
-		});
-	return output;
-};
-
 // Add .gitignore
 const configGitIgnore = async () => {
-	// gitignore.io for easy modularity
-	const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then(
-		(res) => res.text()
-	);
-	fse.writeFile('.gitignore', gitIgnoreConfig);
+	// gitignore.io for easy setup and adaptability
+	try {
+		const gitIgnoreConfig = await fetch(config.gitIgnoreConfig.toString()).then(
+			(res) => res.text()
+		);
+		fse.writeFile('.gitignore', gitIgnoreConfig);
+	} catch (error) {
+		throw Error(`Could not load .gitignore content: ${error}`);
+	}
 };
 
 // get path to package.json
@@ -101,24 +95,22 @@ const addDependencies = () => {
 			throw Error('package.json not found in the current directory!');
 		}
 
-		let dependencies = { 'fs-extra': '^11.1.1', dotenv: '^16.3.1' };
-		let devDependencies = {
-			bumpp: '^9.2.0',
-			eslint: '^8.50.0',
-			'eslint-config-airbnb': '^19.0.4',
-			'eslint-config-prettier': '^9.0.0',
-			nodemon: '^3.0.1',
-			'npm-check': '^6.0.1',
-			'npm-run-all': '^4.1.5',
-			prettier: '^3.0.3',
-			tot_init: '^1.2.5',
+		const existingPackageJson = fse.readJsonSync(packageJson);
+
+		const { dependencies } = config;
+		const { devDependencies } = config;
+
+		existingPackageJson.dependencies = {
+			...existingPackageJson.dependencies,
+			...dependencies,
 		};
 
-		dependencies = sortObjects(dependencies);
-		devDependencies = sortObjects(devDependencies);
+		existingPackageJson.devDependencies = {
+			...existingPackageJson.devDependencies,
+			...devDependencies,
+		};
 
-		fse.writeJsonSync(packageJson.dependencies, dependencies, indentRule);
-		fse.writeJsonSync(packageJson.devDependencies, devDependencies, indentRule);
+		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 	} catch (error) {
 		throw Error(`Could not add dependencies: ${error}`);
 	}
@@ -138,6 +130,7 @@ const runConfig = () => {
 		addConfigs();
 		addDependencies();
 		configGitIgnore();
+		execSync('npm ci');
 	} catch (error) {
 		throw Error(`Couldn't set up configuration files: ${error}`);
 	}
