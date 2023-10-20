@@ -1,6 +1,6 @@
 {
 	"name": "tot_init",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "automating my project initialization",
 	"author": "A. Totland",
 	"license": "MIT",
@@ -67,8 +67,7 @@
 		"eslint-config-prettier": "^9.0.0",
 		"npm-check": "^6.0.1",
 		"npm-run-all": "^4.1.5",
-		"prettier": "^3.0.3",
-		"tot_init": "^1.0.17"
+		"prettier": "^3.0.3"
 	},
 	"bugs": {
 		"url": "https://github.com/aTotland/tot_init/issues"
