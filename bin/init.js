@@ -3,7 +3,8 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
-const latestVersion = require('latest-version');
+
+const latestVersion = await import('latest-version');
 
 const currentDirectory = process.cwd();
 const rootDir = path.join(__dirname, '..');
