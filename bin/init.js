@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-const latestVersion = await import('latest-version');
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
+
+const latestVersion = await import('latest-version');
 
 const currentDirectory = process.cwd();
 const rootDir = path.join(__dirname, '..');
@@ -47,18 +48,20 @@ const addConfigs = async () => {
 
 		const packageJson = path.join(currentDirectory, 'package.json');
 
-		const getLatestPkgVersions = async (jsonObject) => {
-			Object.keys(jsonObject).forEach(([key]) => {
-				console.log(latestVersion(key));
-			});
-		};
+
 
 		if (!fse.existsSync(packageJson)) {
 			throw Error('package.json not found in the current directory.');
 		}
 
 		const existingPackageJson = fse.readJsonSync(packageJson);
-		await getLatestPkgVersions(existingPackageJson);
+
+		(async (existingPackageJson) => {
+			const latestVersion = (await import('latest-version')).default;
+      Object.keys(jsonObject).forEach(([key]) => {
+				console.log(latestVersion(key));
+      
+		})();
 
 		const { scripts } = config;
 		const { eslintConfig } = config;
