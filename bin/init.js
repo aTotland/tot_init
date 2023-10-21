@@ -3,7 +3,6 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
-const gi = require('add-gitignore');
 const {
 	indentRule,
 	scripts,
@@ -40,8 +39,9 @@ const checkGitStatus = () => {
 // Add .gitignore
 const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
+	const { environments } = gitIgnoreConfig;
 	try {
-		gi(gitIgnoreConfig.environments);
+		execSync(`npx gitignore ${environments.join(' ')}`);
 		// const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
 		// 	res.text()
 		// );
