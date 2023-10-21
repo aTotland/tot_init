@@ -3,7 +3,6 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
-const ora = require('ora');
 const {
 	indentRule,
 	scripts,
@@ -14,6 +13,10 @@ const {
 	devDependencies,
 	gitIgnoreConfig,
 } = require('../config');
+
+const ora = (async () => {
+	const chalk = (await import('ora')).default;
+})();
 
 // get current working directory
 const currentDirectory = process.cwd();
