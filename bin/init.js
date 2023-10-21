@@ -145,10 +145,10 @@ const addDependencies = () => {
 
 // Display success message to user
 const successDisplay = () => {
-	console.group('✅ success!');
-	console.info('It is recommended to add these editor plugins:');
-	console.info('➡️ ESLint');
-	console.info('➡️ Prettier');
+	console.group('✅ Success!');
+	console.info('📦   It is recommended to add these editor plugins:');
+	console.info('➡️   ESLint');
+	console.info('➡️   Prettier');
 };
 
 const runNpmInstall = () => {
