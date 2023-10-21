@@ -20,7 +20,7 @@ const currentDirectory = process.cwd();
 
 // Revert changes if something errors
 const revertChanges = () => {
-	const spinner = ora('Reverting changes...').start();
+	const spinner = ora('🔂 - Reverting changes...').start();
 	execSync('git reset --hard && git clean -fd');
 	spinner.stopAndPersist({
 		symbol: '✅',
