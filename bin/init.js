@@ -41,8 +41,7 @@ const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
 	const { environment } = gitIgnoreConfig;
 	try {
-		execSync(`npx gitignore ${environment[5]}`);
-		execSync(`npx gitignore ${environment[4]}`);
+		execSync(`npx add-gitignore ${environment.join(' ')}`);
 		// const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
 		// 	res.text()
 		// );
