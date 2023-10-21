@@ -151,9 +151,15 @@ const successDisplay = () => {
 };
 
 const runNpmInstall = () => {
+	const spinner = ora(' - Installing dependencies...').start();
 	try {
 		execSync('npm i');
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: ' - Installed dependencies',
+		});
 	} catch (error) {
+		spinner.stop();
 		throw Error(`Could not install dependencies: ${error}`);
 	}
 };
