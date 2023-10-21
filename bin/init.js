@@ -103,7 +103,7 @@ const addConfigs = () => {
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: 'added configs to package.json!',
+			text: ' - Added configs to package.json!',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -113,7 +113,7 @@ const addConfigs = () => {
 
 // Add dependencies to package.json
 const addDependencies = () => {
-	const spinner = ora('Adding dependencies to package.json...').start();
+	const spinner = ora(' - Adding dependencies to package.json...').start();
 	try {
 		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
@@ -135,7 +135,7 @@ const addDependencies = () => {
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: 'added dependencies to package.json!',
+			text: ' - Added dependencies to package.json!',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -168,7 +168,7 @@ const runConfig = () => {
 		runNpmInstall();
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: 'Setup finished!',
+			text: ' - Setup finished!',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -182,14 +182,14 @@ const errorDisplay = (error) => {
 };
 
 const init = () => {
-	const spinner = ora('Initializing...').start();
+	const spinner = ora(' - Initializing...').start();
 	try {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: 'Initialized!',
+			text: ' - Initialized!',
 		});
 	} catch (error) {
 		spinner.stop();
