@@ -57,7 +57,7 @@ const configGitIgnore = async () => {
 		execSync(`npx add-gitignore ${environments.join(' ')}`);
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: ' - Added .gitignore!',
+			text: ' - Added .gitignore',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -103,7 +103,7 @@ const addConfigs = () => {
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: ' - Added configs to package.json!',
+			text: ' - Added configs to package.json',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -135,7 +135,7 @@ const addDependencies = () => {
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
 		spinner.stopAndPersist({
 			symbol: '✅',
-			text: ' - Added dependencies to package.json!',
+			text: ' - Added dependencies to package.json',
 		});
 	} catch (error) {
 		spinner.stop();
@@ -146,9 +146,9 @@ const addDependencies = () => {
 // Display success message to user
 const successDisplay = () => {
 	console.group('✅ Success!');
-	console.info('📦  It is recommended to add these editor plugins:');
-	console.info('➡️   ESLint');
-	console.info('➡️   Prettier');
+	console.info('📦 - It is recommended to add these editor plugins:');
+	console.info('➡️  - ESLint');
+	console.info('➡️  - Prettier');
 };
 
 const runNpmInstall = () => {
