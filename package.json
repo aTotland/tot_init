@@ -82,9 +82,4 @@
     "url": "https://github.com/aTotland/tot_init/issues"
   },
   "homepage": "https://github.com/aTotland/tot_init#readme",
-  "nodemonConfig": {
-    "watch": ".",
-    "ext": ".**",
-    "ignore": []
-  }
 }
