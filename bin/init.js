@@ -14,9 +14,9 @@ const {
 	gitIgnoreConfig,
 } = require('../config');
 
-const ora = (async () => {
+const ora = async () => {
 	const chalk = (await import('ora')).default;
-})();
+};
 
 // get current working directory
 const currentDirectory = process.cwd();
