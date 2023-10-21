@@ -168,8 +168,8 @@ const runConfig = () => {
 	const spinner = ora('Setting up configuration files ...').start();
 	try {
 		addConfigs();
-		addDependencies();
 		configGitIgnore();
+		addDependencies();
 		runNpmInstall();
 		spinner.stopAndPersist({
 			symbol: '✅',
