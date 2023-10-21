@@ -69,6 +69,7 @@ module.exports = {
 		link: 'https://www.toptal.com/developers/gitignore/api/',
 		environments: [
 			'database',
+			'git',
 			'linux',
 			'macos',
 			'node',
