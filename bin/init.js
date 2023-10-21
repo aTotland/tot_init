@@ -39,9 +39,10 @@ const checkGitStatus = () => {
 // Add .gitignore
 const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
-	const { environments } = gitIgnoreConfig;
+	const { environment } = gitIgnoreConfig;
 	try {
-		execSync(`npx gitignore ${environments.join(' ')}`);
+		execSync(`npx gitignore ${environment[5]}`);
+		execSync(`npx gitignore ${environment[4]}`);
 		// const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
 		// 	res.text()
 		// );

@@ -67,7 +67,7 @@ module.exports = {
 
 	gitIgnoreConfig: {
 		link: 'https://www.toptal.com/developers/gitignore/api/',
-		environments: [
+		environment: [
 			'windows',
 			'linux',
 			'macos',
