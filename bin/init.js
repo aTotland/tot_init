@@ -3,6 +3,7 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
+const ora = require('ora');
 const {
 	indentRule,
 	scripts,
@@ -19,30 +20,47 @@ const currentDirectory = process.cwd();
 
 // Revert changes if something errors
 const revertChanges = () => {
-	console.info('Reverting changes!');
+	const spinner = ora('Reverting changes...').start();
 	execSync('git reset --hard && git clean -fd');
+	spinner.stopAndPersist({
+		symbol: '✅',
+		text: ' - Reverted changes!',
+	});
 	process.exit(1);
 };
 
 // Check git status for uncommitted changes
 const checkGitStatus = () => {
+	const spinner = ora('Checking git status...').start();
 	const gitStatus = execSync('git status --porcelain').toString();
 	if (gitStatus.trim() !== '') {
-		console.error(
-			'There are uncommitted changes! make a new commit before running again...'
-		);
+		console.error('');
+		spinner.stopAndPersist({
+			symbol: '❌ ',
+			text: ' - There are uncommitted changes! Make a new commit before running again...',
+		});
 		process.exit(1);
 	}
 	process.on('SIGINT', revertChanges);
+	spinner.stopAndPersist({
+		symbol: '✅',
+		text: ' - There are no uncommitted changes.',
+	});
 };
 
 // Add .gitignore
 const configGitIgnore = async () => {
-	// gitignore.io for easy setup and adaptability
+	const spinner = ora(' - Adding .gitignore...').start();
 	const { environments } = gitIgnoreConfig;
 	try {
+		// gitignore.io for easy setup and adaptability
 		execSync(`npx add-gitignore ${environments.join(' ')}`);
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: ' - Added .gitignore!',
+		});
 	} catch (error) {
+		spinner.stop();
 		throw Error(`Could not load .gitignore content: ${error}`);
 	}
 };
@@ -52,11 +70,11 @@ const packageJson = path.join(currentDirectory, 'package.json');
 
 // Add configs to package.json
 const addConfigs = () => {
+	const spinner = ora('Updating package.json scripts & configs...').start();
 	try {
-		console.info('Updating package.json scripts & configs...');
-
 		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
+			spinner.stop();
 			throw Error('package.json not found in the current directory!');
 		}
 
@@ -83,16 +101,20 @@ const addConfigs = () => {
 		};
 
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: 'added configs to package.json!',
+		});
 	} catch (error) {
+		spinner.stop();
 		throw Error(`Could not update package.json: ${error}`);
 	}
 };
 
 // Add dependencies to package.json
 const addDependencies = () => {
+	const spinner = ora('Adding dependencies to package.json...').start();
 	try {
-		console.info('Updating package.json dependencies...');
-
 		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
 			throw Error('package.json not found in the current directory!');
@@ -111,17 +133,22 @@ const addDependencies = () => {
 		};
 
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: 'added dependencies to package.json!',
+		});
 	} catch (error) {
+		spinner.stop();
 		throw Error(`Could not add dependencies: ${error}`);
 	}
 };
 
 // Display success message to user
 const successDisplay = () => {
-	console.group('success!');
+	console.group('✅ success!');
 	console.info('It is recommended to add these editor plugins:');
-	console.info('--> ESLint');
-	console.info('--> Prettier');
+	console.info('➡️ ESLint');
+	console.info('➡️ Prettier');
 };
 
 const runNpmInstall = () => {
@@ -133,13 +160,18 @@ const runNpmInstall = () => {
 };
 
 const runConfig = () => {
+	const spinner = ora('Setting up configuration files ...').start();
 	try {
-		console.info('Setting up configuration files ...');
 		addConfigs();
 		addDependencies();
 		configGitIgnore();
 		runNpmInstall();
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: 'Setup finished!',
+		});
 	} catch (error) {
+		spinner.stop();
 		throw Error(`Couldn't set up configuration files: ${error}`);
 	}
 };
@@ -150,12 +182,17 @@ const errorDisplay = (error) => {
 };
 
 const init = () => {
-	console.info('Initializing...');
+	const spinner = ora('Initializing...').start();
 	try {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
+		spinner.stopAndPersist({
+			symbol: '✅',
+			text: 'Initialized!',
+		});
 	} catch (error) {
+		spinner.stop();
 		errorDisplay(error);
 		revertChanges();
 	}
