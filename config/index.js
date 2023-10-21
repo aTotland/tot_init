@@ -67,13 +67,13 @@ module.exports = {
 
 	gitIgnoreConfig: {
 		link: 'https://www.toptal.com/developers/gitignore/api/',
-		environment: [
-			'windows',
+		environments: [
+			'database',
 			'linux',
 			'macos',
-			'visualstudiocode',
-			'database',
 			'node',
+			'visualstudiocode',
+			'windows',
 		],
 	},
 };

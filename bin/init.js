@@ -39,13 +39,9 @@ const checkGitStatus = () => {
 // Add .gitignore
 const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
-	const { environment } = gitIgnoreConfig;
+	const { environments } = gitIgnoreConfig;
 	try {
-		execSync(`npx add-gitignore ${environment.join(' ')}`);
-		// const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
-		// 	res.text()
-		// );
-		// fse.writeFile('.gitignore', gitIgnoreConfig);
+		execSync(`npx add-gitignore ${environments.join(' ')}`);
 	} catch (error) {
 		throw Error(`Could not load .gitignore content: ${error}`);
 	}
