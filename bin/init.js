@@ -3,12 +3,20 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
+const gi = require('add-gitignore');
+const {
+	indentRule,
+	scripts,
+	eslintConfig,
+	prettier,
+	nodemonConfig,
+	dependencies,
+	devDependencies,
+	gitIgnoreConfig,
+} = require('../config');
 
+// get current working directory
 const currentDirectory = process.cwd();
-const rootDir = path.join(__dirname, '..');
-
-const config = fse.readJsonSync(path.join(rootDir, 'config/config.json'));
-const indentRule = { spaces: 2 };
 
 // Revert changes if something errors
 const revertChanges = () => {
@@ -33,10 +41,11 @@ const checkGitStatus = () => {
 const configGitIgnore = async () => {
 	// gitignore.io for easy setup and adaptability
 	try {
-		const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
-			res.text()
-		);
-		fse.writeFile('.gitignore', gitIgnoreConfig);
+		gi(gitIgnoreConfig.environments);
+		// const gitIgnoreConfig = await fetch(config.gitIgnoreConfig).then((res) =>
+		// 	res.text()
+		// );
+		// fse.writeFile('.gitignore', gitIgnoreConfig);
 	} catch (error) {
 		throw Error(`Could not load .gitignore content: ${error}`);
 	}
@@ -50,16 +59,12 @@ const addConfigs = () => {
 	try {
 		console.info('Updating package.json scripts & configs...');
 
+		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
 			throw Error('package.json not found in the current directory!');
 		}
 
 		const existingPackageJson = fse.readJsonSync(packageJson);
-
-		const { scripts } = config;
-		const { eslintConfig } = config;
-		const { prettier } = config;
-		const { nodemonConfig } = config;
 
 		existingPackageJson.scripts = {
 			...existingPackageJson.scripts,
@@ -87,18 +92,17 @@ const addConfigs = () => {
 	}
 };
 
+// Add dependencies to package.json
 const addDependencies = () => {
 	try {
 		console.info('Updating package.json dependencies...');
 
+		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
 			throw Error('package.json not found in the current directory!');
 		}
 
 		const existingPackageJson = fse.readJsonSync(packageJson);
-
-		const { dependencies } = config;
-		const { devDependencies } = config;
 
 		existingPackageJson.dependencies = {
 			...existingPackageJson.dependencies,
@@ -124,13 +128,21 @@ const successDisplay = () => {
 	console.info('--> Prettier');
 };
 
+const runNpmInstall = () => {
+	try {
+		execSync('npm i');
+	} catch (error) {
+		throw Error(`Could not install dependencies: ${error}`);
+	}
+};
+
 const runConfig = () => {
 	try {
 		console.info('Setting up configuration files ...');
 		addConfigs();
 		addDependencies();
 		configGitIgnore();
-		execSync('npm i');
+		runNpmInstall();
 	} catch (error) {
 		throw Error(`Couldn't set up configuration files: ${error}`);
 	}
@@ -142,6 +154,7 @@ const errorDisplay = (error) => {
 };
 
 const init = () => {
+	console.info('Initializing...');
 	try {
 		checkGitStatus();
 		runConfig();
