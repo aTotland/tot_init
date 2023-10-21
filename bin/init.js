@@ -181,17 +181,11 @@ const errorDisplay = (error) => {
 };
 
 const init = () => {
-	const spinner = ora(' - Initializing...').start();
 	try {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Initialized!',
-		});
 	} catch (error) {
-		spinner.stop();
 		errorDisplay(error);
 		revertChanges();
 	}
