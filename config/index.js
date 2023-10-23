@@ -1,4 +1,6 @@
 module.exports = {
+	version: JSON.stringify('../package.json'.version),
+
 	indentRule: { spaces: 2 },
 
 	scripts: {

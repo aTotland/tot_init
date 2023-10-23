@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const fse = require('fs-extra');
 const ora = require('ora');
 const {
+	version,
 	indentRule,
 	scripts,
 	eslintConfig,
@@ -187,12 +188,15 @@ const errorDisplay = (error) => {
 };
 
 const init = () => {
+	const spinner = ora(`Running tot_init version: ${version}`).start();
 	try {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
+		spinner.stop();
 	} catch (error) {
 		errorDisplay(error);
+		spinner.stop();
 		revertChanges();
 	}
 };
