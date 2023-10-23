@@ -193,10 +193,10 @@ const init = () => {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
-		spinner.stop();
+		spinner.stopAndPersist();
 	} catch (error) {
 		errorDisplay(error);
-		spinner.stop();
+		spinner.stopAndPersist();
 		revertChanges();
 	}
 };
