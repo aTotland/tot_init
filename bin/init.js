@@ -16,7 +16,7 @@ const {
 	gitIgnoreConfig,
 } = require('../config');
 
-const version = JSON.stringify('../package.json'.version);
+const version = JSON.stringify(require('../package.json').version);
 
 // get current working directory
 const currentDirectory = process.cwd();
