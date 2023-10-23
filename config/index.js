@@ -62,7 +62,6 @@ module.exports = {
 		'npm-check': '^6.0.1',
 		'npm-run-all': '^4.1.5',
 		prettier: '^3.0.3',
-		tot_init: '^1.2.5',
 	},
 
 	gitIgnoreConfig: {
