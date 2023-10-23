@@ -4,8 +4,8 @@ const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
 const ora = require('ora');
+
 const {
-	version,
 	indentRule,
 	scripts,
 	eslintConfig,
@@ -15,6 +15,8 @@ const {
 	devDependencies,
 	gitIgnoreConfig,
 } = require('../config');
+
+const version = JSON.stringify('../package.json'.version);
 
 // get current working directory
 const currentDirectory = process.cwd();
