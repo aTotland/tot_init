@@ -3,7 +3,6 @@
 const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
-const ora = require('ora');
 
 const {
 	indentRule,
@@ -23,47 +22,35 @@ const currentDirectory = process.cwd();
 
 // Revert changes if something errors
 const revertChanges = () => {
-	const spinner = ora('🔂 - Reverting changes...').start();
+	console.info('🔂 - Reverting changes...');
 	execSync('git reset --hard && git clean -fd');
-	spinner.stopAndPersist({
-		symbol: '✅',
-		text: ' - Reverted changes!',
-	});
+	console.info('✅ - Reverted changes');
 	process.exit(1);
 };
 
 // Check git status for uncommitted changes
 const checkGitStatus = () => {
-	const spinner = ora('Checking git status...').start();
+	console.info('Checking git status...');
 	const gitStatus = execSync('git status --porcelain').toString();
 	if (gitStatus.trim() !== '') {
-		console.error('');
-		spinner.stopAndPersist({
-			symbol: '❌ ',
-			text: ' - There are uncommitted changes! Make a new commit before running again...',
-		});
+		console.info(
+			'❌  - There are uncommitted changes! Make a new commit before running again...'
+		);
 		process.exit(1);
 	}
 	process.on('SIGINT', revertChanges);
-	spinner.stopAndPersist({
-		symbol: '✅',
-		text: ' - There are no uncommitted changes.',
-	});
+	console.info('✅ - There are no uncommitted changes.');
 };
 
 // Add .gitignore
 const configGitIgnore = async () => {
-	const spinner = ora(' - Adding .gitignore...').start();
+	console.info(' - Adding .gitignore...');
 	const { environments } = gitIgnoreConfig;
 	try {
 		// gitignore.io for easy setup and adaptability
 		execSync(`npx add-gitignore ${environments.join(' ')}`);
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Added .gitignore',
-		});
+		console.info('✅ - Added .gitignore');
 	} catch (error) {
-		spinner.stop();
 		throw Error(`Could not load .gitignore content: ${error}`);
 	}
 };
@@ -73,11 +60,10 @@ const packageJson = path.join(currentDirectory, 'package.json');
 
 // Add configs to package.json
 const addConfigs = () => {
-	const spinner = ora('Updating package.json scripts & configs...').start();
+	console.info('Updating package.json scripts & configs...');
 	try {
 		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
-			spinner.stop();
 			throw Error('package.json not found in the current directory!');
 		}
 
@@ -104,19 +90,15 @@ const addConfigs = () => {
 		};
 
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Added configs to package.json',
-		});
+		console.info('✅ - Added configs to package.json');
 	} catch (error) {
-		spinner.stop();
 		throw Error(`Could not update package.json: ${error}`);
 	}
 };
 
 // Add dependencies to package.json
 const addDependencies = () => {
-	const spinner = ora(' - Adding dependencies to package.json...').start();
+	console.info(' - Adding dependencies to package.json...');
 	try {
 		// check if package.json exists, if not, throw error
 		if (!fse.existsSync(packageJson)) {
@@ -136,13 +118,34 @@ const addDependencies = () => {
 		};
 
 		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Added dependencies to package.json',
-		});
+		console.info('✅ - Added dependencies to package.json');
 	} catch (error) {
-		spinner.stop();
 		throw Error(`Could not add dependencies: ${error}`);
+	}
+};
+
+const runNpmInstall = () => {
+	console.info(' - Installing dependencies...');
+	try {
+		execSync('npm i');
+		console.info('✅ - Installed dependencies');
+		execSync('npm up');
+		console.info('✅ - Updated dependencies');
+	} catch (error) {
+		throw Error(`Could not install dependencies: ${error}`);
+	}
+};
+
+const runConfig = () => {
+	console.info('Setting up configuration files ...');
+	try {
+		addConfigs();
+		configGitIgnore();
+		addDependencies();
+		runNpmInstall();
+		console.info('✅ - Setup finished!');
+	} catch (error) {
+		throw Error(`Couldn't set up configuration files: ${error}`);
 	}
 };
 
@@ -153,52 +156,19 @@ const successDisplay = () => {
 	console.info('➡️  - Prettier');
 };
 
-const runNpmInstall = () => {
-	const spinner = ora(' - Installing dependencies...').start();
-	try {
-		execSync('npm i');
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Installed dependencies',
-		});
-	} catch (error) {
-		spinner.stop();
-		throw Error(`Could not install dependencies: ${error}`);
-	}
-};
-
-const runConfig = () => {
-	const spinner = ora('Setting up configuration files ...').start();
-	try {
-		addConfigs();
-		configGitIgnore();
-		addDependencies();
-		runNpmInstall();
-		spinner.stopAndPersist({
-			symbol: '✅',
-			text: ' - Setup finished!',
-		});
-	} catch (error) {
-		spinner.stop();
-		throw Error(`Couldn't set up configuration files: ${error}`);
-	}
-};
-
 // Display success message to user
 const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
 
 const init = () => {
-	const spinner = ora(`Running tot_init version: ${version}`).start();
+	console.info(`Running tot_init version: ${version}`);
 	try {
 		checkGitStatus();
 		runConfig();
 		successDisplay();
-		spinner.stopAndPersist();
 	} catch (error) {
 		errorDisplay(error);
-		spinner.stopAndPersist();
 		revertChanges();
 	}
 };

@@ -49,8 +49,8 @@ module.exports = {
 	},
 
 	dependencies: {
-		'fs-extra': '^11.1.1',
 		dotenv: '^16.3.1',
+		'fs-extra': '^11.1.1',
 	},
 
 	devDependencies: {
