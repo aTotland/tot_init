@@ -32,6 +32,7 @@ module.exports = {
 	},
 
 	prettier: {
+		plugins: ['prettier-plugin-ejs'],
 		printWidth: 80,
 		useTabs: true,
 		tabWidth: 2,
@@ -62,6 +63,7 @@ module.exports = {
 		'npm-check': '^6.0.1',
 		'npm-run-all': '^4.1.5',
 		prettier: '^3.0.3',
+		'prettier-plugin-ejs': '^0.0.18',
 	},
 
 	gitIgnoreConfig: {
