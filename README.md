@@ -1,27 +1,18 @@
 # tot_init
 
-## quickly get my settings right for my projects
+## Simplifying Project Setup
 
-I was getting tired of manually setting up my projects with eslint rules etc
+Setting up projects can be a tedious task, involving manual configuration of eslint rules and installation of commonly used dependencies... etc
+To streamline this process, I created `tot_init` - a tool that automates project setup.
 
-so I figured I would automate it a bit
+With `tot_init`, you can quickly and effortlessly configure your project, eliminating the need for manual configuration, making project setup a breeze.
 
 ---
 
 ## How to use:
 
-`cd` into your project `root dir` and run:
-
-```zsh
-npm i --save-dev tot_init
-```
-
-then run:
+To use `tot_init`, simply navigate to the root directory of your project and run the following command in your terminal:
 
 ```zsh
 npx tot_init
 ```
-
-<!-- begin auto-generated rules list -->
-
-<!-- end auto-generated rules list -->
