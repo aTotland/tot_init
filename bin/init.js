@@ -113,7 +113,7 @@ const runNpmInstall = () => {
 	try {
 		execSync('npm i');
 		console.info('✅ - Installed dependencies');
-		execSync('npm run up');
+		execSync('npm up');
 		console.info('✅ - Updated dependencies');
 	} catch (error) {
 		throw Error(`❌ - Could not install dependencies: ${error}`);
