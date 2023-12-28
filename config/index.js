@@ -10,7 +10,7 @@ module.exports = {
 		'lint:eslint': 'eslint --fix .',
 		release: 'bumpp -r --all --commit="release: %s" --tag="%s"',
 		reset: 'git reset --hard && git clean -fd ',
-		up: 'npm-check -u && npm audit fix',
+		up: 'npx npm-check -u && npm audit fix',
 	},
 
 	eslintConfig: {
