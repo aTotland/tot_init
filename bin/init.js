@@ -4,6 +4,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const fse = require('fs-extra');
 
+// Import configurations
 const {
 	indentRule,
 	scripts,
@@ -15,12 +16,14 @@ const {
 	gitIgnoreConfig,
 } = require('../config');
 
+// Get version from package.json
 const version = JSON.stringify(require('../package.json').version);
-
-// get current working directory
+// Get current working directory
 const currentDirectory = process.cwd();
+// Get path to package.json
+const packageJsonPath = path.join(currentDirectory, 'package.json');
 
-// Revert changes if something errors
+// Function to revert changes on SIGINT in case of errors
 const revertChanges = () => {
 	console.info('🔄 - Reverting changes...');
 	execSync('git reset --hard && git clean -fd');
@@ -28,7 +31,7 @@ const revertChanges = () => {
 	process.exit(1);
 };
 
-// Check git status for uncommitted changes
+// Function to check git status
 const checkGitStatus = () => {
 	console.info('🔄 - Checking git status...');
 	const gitStatus = execSync('git status --porcelain').toString();
@@ -42,7 +45,7 @@ const checkGitStatus = () => {
 	console.info('✅ - There are no uncommitted changes.');
 };
 
-// Add .gitignore
+// Function to add .gitignore
 const configGitIgnore = async () => {
 	console.info('🔄 - Adding .gitignore...');
 	const { environments } = gitIgnoreConfig;
@@ -55,73 +58,54 @@ const configGitIgnore = async () => {
 	}
 };
 
-// get path to package.json
-const packageJson = path.join(currentDirectory, 'package.json');
+// Function to read package.json if it exists
+const readPackageJson = (packageJson) => {
+	if (!fse.existsSync(packageJson)) {
+		throw Error('❌ - package.json not found in the current directory!');
+	}
+	return fse.readJsonSync(packageJson);
+};
 
-// Add configs to package.json
-const addConfigs = () => {
-	console.info('🔄 - Updating package.json scripts & configs...');
+// Function to update package.json if it exists
+const updatePackageJson = (existingPackageJson) => {
+	console.info('🔄 - Updating package.json scripts, configs & dependencies...');
 	try {
-		// check if package.json exists, if not, throw error
-		if (!fse.existsSync(packageJson)) {
-			throw Error('❌ - package.json not found in the current directory!');
-		}
-
-		const existingPackageJson = fse.readJsonSync(packageJson);
-
-		existingPackageJson.scripts = {
-			...existingPackageJson.scripts,
-			...scripts,
+		return {
+			...existingPackageJson,
+			scripts: {
+				...existingPackageJson.scripts,
+				...scripts,
+			},
+			eslintConfig: {
+				...existingPackageJson.eslintConfig,
+				...eslintConfig,
+			},
+			prettier: {
+				...existingPackageJson.prettier,
+				...prettier,
+			},
+			nodemonConfig: {
+				...existingPackageJson.nodemonConfig,
+				...nodemonConfig,
+			},
+			dependencies: {
+				...existingPackageJson.dependencies,
+				...dependencies,
+			},
+			devDependencies: {
+				...existingPackageJson.devDependencies,
+				...devDependencies,
+			},
 		};
-
-		existingPackageJson.eslintConfig = {
-			...existingPackageJson.eslintConfig,
-			...eslintConfig,
-		};
-
-		existingPackageJson.prettier = {
-			...existingPackageJson.prettier,
-			...prettier,
-		};
-
-		existingPackageJson.nodemonConfig = {
-			...existingPackageJson.nodemonConfig,
-			...nodemonConfig,
-		};
-
-		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
-		console.info('✅ - Added configs to package.json');
 	} catch (error) {
 		throw Error(`❌ - Could not update package.json: ${error}`);
 	}
 };
 
-// Add dependencies to package.json
-const addDependencies = () => {
-	console.info('🔄 - Adding dependencies to package.json...');
-	try {
-		// check if package.json exists, if not, throw error
-		if (!fse.existsSync(packageJson)) {
-			throw Error('❌ - Package.json not found in the current directory!');
-		}
-
-		const existingPackageJson = fse.readJsonSync(packageJson);
-
-		existingPackageJson.dependencies = {
-			...existingPackageJson.dependencies,
-			...dependencies,
-		};
-
-		existingPackageJson.devDependencies = {
-			...existingPackageJson.devDependencies,
-			...devDependencies,
-		};
-
-		fse.writeJsonSync(packageJson, existingPackageJson, indentRule);
-		console.info('✅ - Added dependencies to package.json');
-	} catch (error) {
-		throw Error(`❌ - Could not add dependencies: ${error}`);
-	}
+// Function to write package.json
+const writePackageJson = (packagePath, content) => {
+	fse.writeJsonSync(packagePath, content, indentRule);
+	console.info('✅ - Added configs to package.json');
 };
 
 const runNpmInstall = () => {
@@ -129,7 +113,7 @@ const runNpmInstall = () => {
 	try {
 		execSync('npm i');
 		console.info('✅ - Installed dependencies');
-		execSync('npm up');
+		execSync('npm run up');
 		console.info('✅ - Updated dependencies');
 	} catch (error) {
 		throw Error(`❌ - Could not install dependencies: ${error}`);
@@ -139,9 +123,11 @@ const runNpmInstall = () => {
 const runConfig = () => {
 	console.info('🔄 - Setting up configuration files ...');
 	try {
-		addConfigs();
+		// Usage of functions to add configs and dependencies to package.json
+		const existingPackageJson = readPackageJson(packageJsonPath);
+		const updatedPackageJson = updatePackageJson(existingPackageJson);
+		writePackageJson(packageJsonPath, updatedPackageJson);
 		configGitIgnore();
-		addDependencies();
 		runNpmInstall();
 		console.info('✅ - Setup finished!');
 	} catch (error) {
@@ -156,7 +142,7 @@ const successDisplay = () => {
 	console.info('➡️  - Prettier');
 };
 
-// Display success message to user
+// Display error message to user
 const errorDisplay = (error) => {
 	console.error(`${error.message}`);
 };
