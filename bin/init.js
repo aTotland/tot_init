@@ -2,7 +2,7 @@
 
 const path = require('path');
 const { execSync } = require('child_process');
-const fse = require('fs-extra');
+const fs = require('fs-extra');
 
 // Import configurations
 const {
@@ -60,10 +60,10 @@ const configGitIgnore = async () => {
 
 // Function to read package.json if it exists
 const readPackageJson = (packageJson) => {
-	if (!fse.existsSync(packageJson)) {
+	if (!fs.existsSync(packageJson)) {
 		throw Error('❌ - package.json not found in the current directory!');
 	}
-	return fse.readJsonSync(packageJson);
+	return fs.readJsonSync(packageJson);
 };
 
 // Function to update package.json if it exists
@@ -104,7 +104,7 @@ const updatePackageJson = (existingPackageJson) => {
 
 // Function to write package.json
 const writePackageJson = (packagePath, content) => {
-	fse.writeJsonSync(packagePath, content, indentRule);
+	fs.writeJsonSync(packagePath, content, indentRule);
 	console.info('✅ - Added configs to package.json');
 };
 
