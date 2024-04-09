@@ -45,7 +45,7 @@ jobs:
         uses: JS-DevTools/npm-publish@v3
         id: publish
         with:
-          token: env.NODE_AUTH_TOKEN
+          token: ${{secrets.NPM_TOKEN}}
           access: 'public'
           tag: 'latest'
           dry-run: false
