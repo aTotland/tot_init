@@ -101,11 +101,7 @@ const updatePackageJson = (existingPackageJson) => {
 }
 
 // Function to turn eslint.config.js into a string
-const eslintConfigString = `module.exports = ${JSON.stringify(
-  eslintConfig,
-  null,
-  2
-)}`
+const eslintConfigJSON = JSON.stringify(eslintConfig, null, 2)
 
 // Function to write eslint.config.js
 const writeEsLintConfig = (esLintPath, content) => {
@@ -138,7 +134,7 @@ const runConfig = () => {
     const existingPackageJson = readPackageJson(packageJsonPath)
     const updatedPackageJson = updatePackageJson(existingPackageJson)
     writePackageJson(packageJsonPath, updatedPackageJson)
-    writeEsLintConfig(esLintConfigPath, eslintConfigString)
+    writeEsLintConfig(esLintConfigPath, eslintConfigJSON)
     configGitIgnore()
     runNpmInstall()
     console.info('✅ - Setup finished!')
