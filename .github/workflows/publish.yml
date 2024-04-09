@@ -44,7 +44,7 @@ jobs:
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
         with:
-          token: NODE_AUTH_TOKEN
+          token: ${{secrets.NPM_TOKEN}}
           access: 'public'
           tag: 'latest'
           dry-run: false
