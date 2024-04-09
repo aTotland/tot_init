@@ -100,6 +100,13 @@ const updatePackageJson = (existingPackageJson) => {
   }
 }
 
+// Function to turn eslint.config.js into a string
+const eslintConfigString = `module.exports = ${JSON.stringify(
+  eslintConfig,
+  null,
+  2
+)}`
+
 // Function to write eslint.config.js
 const writeEsLintConfig = (esLintPath, content) => {
   fs.writeFileSync(esLintPath, content, indentRule)
