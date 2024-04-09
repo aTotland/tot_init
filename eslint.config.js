@@ -7,7 +7,6 @@ module.exports = [
   standard,
   {
     languageOptions: {
-      ecmaVersion: 'latest',
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: {
