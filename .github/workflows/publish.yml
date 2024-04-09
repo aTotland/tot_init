@@ -34,13 +34,13 @@ jobs:
           check-latest: true
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-      # Install all project dependencies
+      # Install all project dependencies for lint and tests
       - name: Run lint and tests...
-        run: npm i
-      # Run lint and format against codebase
+        run: npm ci
+      # Run lint, format and tests
       - name: Run lint & format
         run: npm run lint
-      # Publish  codebase to NPM
+      # Publish  codebase to NPM registry
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
         with:
