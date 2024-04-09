@@ -21,7 +21,7 @@ module.exports = {
 			es2023: true,
 			node: true,
 		},
-		extends: ['eslint:recommended', 'airbnb', 'prettier'],
+		extends: ['eslint:recommended', 'plugin:prettier/recommended', 'prettier'],
 		parserOptions: {
 			ecmaVersion: 'latest',
 		},
@@ -56,6 +56,7 @@ module.exports = {
 	devDependencies: {
 		bumpp: '^9.4.0',
 		eslint: '^9.0.0',
+		'eslint-config-eslint': '^9.0.0',
 		'eslint-plugin-prettier': '^5.1.3',
 		'eslint-config-prettier': '^9.1.0',
 		'npm-check': '^6.0.1',
