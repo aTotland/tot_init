@@ -35,23 +35,20 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       # Install all project dependencies
-      - name: Install dependencies
+      - name: Run lint and tests...
         run: npm i
       # Run lint and format against codebase
       - name: Run lint & format
         run: npm run lint
       # Publish  codebase to NPM
       - name: Publish to NPM
-        run: |
-          if git log -1 --pretty=%B | grep "^Release: [0-9]\+\.[0-9]\+\.[0-9]\+$";
-          then
-            npm -r publish --provenance --access public
-          elif git log -1 --pretty=%B | grep "^Release: [0-9]\+\.[0-9]\+\.[0-9]\+";
-          then
-            npm -r publish --provenance --access public --tag next
-          else
-            echo "Not a release, skipping publish..."
-          fi
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: NODE_AUTH_TOKEN
+          access: 'public'
+          tag: 'latest'
+          dry-run: false
+          registry: 'https://registry.npmjs.org'
         # ENV
         env:
           DEFAULT_BRANCH: main
