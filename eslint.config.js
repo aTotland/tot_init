@@ -5,7 +5,7 @@ const styleGuide = require('eslint-config-standard')
 export default []
 
 module.exports = [
-  ...[].concat(styleGuide)
+  ...[].concat(styleGuide),
   eslintConfigPrettier,
   {
     languageOptions: {
