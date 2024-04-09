@@ -54,15 +54,14 @@ module.exports = {
 	},
 
 	devDependencies: {
-		bumpp: '^9.2.1',
-		eslint: '^8.56.0',
+		bumpp: '^9.4.0',
+		eslint: '^9.0.0',
 		'eslint-config-airbnb': '^19.0.4',
 		'eslint-config-prettier': '^9.1.0',
-		nodemon: '^3.0.2',
 		'npm-check': '^6.0.1',
 		'npm-run-all': '^4.1.5',
-		prettier: '^3.1.1',
-		'prettier-plugin-ejs': '^0.0.18',
+		prettier: '^3.2.5',
+		'prettier-plugin-ejs': '^1.0.3',
 	},
 
 	gitIgnoreConfig: {
