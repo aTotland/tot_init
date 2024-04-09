@@ -26,7 +26,7 @@ module.exports = {
     semi: false
   },
 
-  eslint: `
+  eslintConfig: `
   const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
   const eslintConfigPrettier = require('eslint-config-prettier')
   // const styleGuide = require('eslint-config-standard')
