@@ -9,6 +9,7 @@ const {
   indentRule,
   scripts,
   prettier,
+  eslint,
   nodemonConfig,
   dependencies,
   devDependencies,
@@ -23,7 +24,7 @@ const version = JSON.stringify(require('../package.json').version)
 const currentDirectory = process.cwd()
 // Get path to package.json
 const packageJsonPath = path.join(currentDirectory, 'package.json')
-const esLintConfigPath = path.join(currentDirectory, 'eslint.config.js')
+const esLintConfigPath = path.join(currentDirectory, 'eslint.config')
 
 // Function to revert changes on SIGINT in case of errors
 const revertChanges = () => {
@@ -134,7 +135,7 @@ const runConfig = () => {
     const existingPackageJson = readPackageJson(packageJsonPath)
     const updatedPackageJson = updatePackageJson(existingPackageJson)
     writePackageJson(packageJsonPath, updatedPackageJson)
-    writeEsLintConfig(esLintConfigPath, eslintConfigJSON)
+    writeEsLintConfig(esLintConfigPath, eslint)
     configGitIgnore()
     runNpmInstall()
     console.info('✅ - Setup finished!')
