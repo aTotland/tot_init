@@ -15,7 +15,7 @@ const {
   gitIgnoreConfig
 } = require('../config')
 
-const eslintConfig = require('../eslint.config')
+const eslintConfig = require('../eslint.config.js')
 
 // Get version from package.json
 const version = JSON.stringify(require('../package.json').version)
