@@ -43,14 +43,14 @@ jobs:
       # Publish  codebase to NPM
       - name: Publish to NPM
         run: |
-          if git log -1 --pretty=%B | grep "^release: [0-9]\+\.[0-9]\+\.[0-9]\+$";
+          if git log -1 --pretty=%B | grep "^Release: [0-9]\+\.[0-9]\+\.[0-9]\+$";
           then
             npm -r publish --provenance --access public
-          elif git log -1 --pretty=%B | grep "^release: [0-9]\+\.[0-9]\+\.[0-9]\+";
+          elif git log -1 --pretty=%B | grep "^Release: [0-9]\+\.[0-9]\+\.[0-9]\+";
           then
             npm -r publish --provenance --access public --tag next
           else
-            echo "Not a release, skipping publish"
+            echo "Not a release, skipping publish..."
           fi
         # ENV
         env:
