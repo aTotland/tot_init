@@ -138,7 +138,7 @@ const runConfig = () => {
     const existingPackageJson = readPackageJson(packageJsonPath)
     const updatedPackageJson = updatePackageJson(existingPackageJson)
     writePackageJson(packageJsonPath, updatedPackageJson)
-    writeEsLintConfig(esLintConfigPath, eslintConfig)
+    writeEsLintConfig(esLintConfigPath, eslintConfigString)
     configGitIgnore()
     runNpmInstall()
     console.info('✅ - Setup finished!')
