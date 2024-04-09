@@ -45,7 +45,8 @@ module.exports = {
     'npm-check': '^6.0.1',
     'npm-run-all': '^4.1.5',
     prettier: '^3.2.5',
-    'prettier-plugin-ejs': '^1.0.3'
+    'prettier-plugin-ejs': '^1.0.3',
+    standard: '*'
   },
 
   gitIgnoreConfig: {
