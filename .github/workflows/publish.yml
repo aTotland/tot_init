@@ -43,12 +43,17 @@ jobs:
       # Publish  codebase to NPM registry
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
+        id: publish
         with:
           token: ${{secrets.NPM_TOKEN}}
           access: 'public'
           tag: 'latest'
           dry-run: false
           registry: 'https://registry.npmjs.org'
+
+      - if: ${{ steps.publish.outputs.type }}
+        run: echo "Published ${{ steps.publish.outputs.type }} ${{ steps.publish.outputs.name }}@${{ steps.publish.outputs.version }}"
+
         # ENV
         env:
           DEFAULT_BRANCH: main
