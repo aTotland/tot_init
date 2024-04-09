@@ -9,8 +9,8 @@ const fs = require('fs-extra')
 const {
   indentRule,
   scripts,
-  prettier,
-  eslint,
+  prettierConfig,
+  eslintConfig,
   nodemonConfig,
   dependencies,
   devDependencies,
@@ -92,7 +92,7 @@ const updatePackageJson = (existingPackageJson) => {
       },
       prettierConfig: {
         ...existingPackageJson.prettier,
-        ...prettier
+        ...prettierConfig
       },
       nodemonConfig: {
         ...existingPackageJson.nodemonConfig,
@@ -146,7 +146,7 @@ const runConfig = () => {
     const existingPackageJson = readPackageJson(packageJsonPath)
     const updatedPackageJson = updatePackageJson(existingPackageJson)
     writePackageJson(packageJsonPath, updatedPackageJson)
-    writeEsLintConfig(esLintConfigPath, eslint)
+    writeEsLintConfig(esLintConfigPath, eslintConfig)
     configGitIgnore()
     runNpmInstall()
     info('✅ - Setup finished!')
