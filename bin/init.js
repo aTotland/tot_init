@@ -161,6 +161,7 @@ const init = () => {
   try {
     checkGitStatus()
     runConfig()
+    execSync('npm run lint')
     successDisplay()
   } catch (error) {
     errorDisplay(error)
