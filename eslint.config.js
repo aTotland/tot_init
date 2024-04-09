@@ -1,21 +1,24 @@
+const standard = require('eslint-config-standard')
+const eslintConfigPrettier = require('eslint-config-prettier')
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
+
 module.exports = [
+  eslintConfigPrettier,
+  standard,
   {
     languageOptions: {
-      env: {
-        browser: true,
-        commonjs: true,
-        es2023: true,
-        node: true,
-      },
-
-    extends: ["eslint:recommended", "plugin:prettier/recommended", "prettier"],
-
-    parserOptions: {
-      ecmaVersion: "latest",
+      ecmaVersion: 'latest',
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: {
+          jsx: true,
+          ejs: true
+        }
+      }
     },
-
+    plugins: { eslintPluginPrettierRecommended },
     rules: {
-      "no-console": 0,
-    },
-  },
-];
+      'no-console': 0
+    }
+  }
+]
