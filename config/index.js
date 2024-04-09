@@ -56,7 +56,7 @@ module.exports = {
 	devDependencies: {
 		bumpp: '^9.4.0',
 		eslint: '^9.0.0',
-		'eslint-config-airbnb': '^19.0.4',
+		'eslint-plugin-prettier': '^5.1.3',
 		'eslint-config-prettier': '^9.1.0',
 		'npm-check': '^6.0.1',
 		'npm-run-all': '^4.1.5',
