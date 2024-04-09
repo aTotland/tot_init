@@ -3,7 +3,6 @@ const eslintConfigPrettier = require('eslint-config-prettier')
 const styleGuide = require('eslint-config-standard')
 
 module.exports = [
-  ...[].concat(styleGuide),
   eslintConfigPrettier,
   {
     languageOptions: {
@@ -19,5 +18,6 @@ module.exports = [
     rules: {
       'no-console': 0
     }
-  }
+  },
+  ...[].concat(styleGuide)
 ]
