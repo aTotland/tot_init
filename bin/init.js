@@ -160,6 +160,7 @@ const successDisplay = () => {
   console.group('📦 - It is recommended to add these editor plugins:')
   info('➡️  - ESLint')
   info('➡️  - Prettier')
+  info('➡️  - StandardJS')
 }
 
 // Display error message to user
