@@ -2,8 +2,6 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 const eslintConfigPrettier = require('eslint-config-prettier')
 // const styleGuide = require('eslint-config-standard')
 
-const { eslintConfig } = require('./config')
-
 module.exports = [
   eslintConfigPrettier,
   // ...[].concat(styleGuide)
