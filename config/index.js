@@ -14,7 +14,7 @@ module.exports = {
     up: 'npx npm-check -u && npm audit fix'
   },
 
-  prettier: {
+  prettierConfig: {
     plugins: ['prettier-plugin-ejs'],
     printWidth: 80,
     useTabs: false,

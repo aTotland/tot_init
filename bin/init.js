@@ -9,20 +9,20 @@ const fs = require('fs-extra')
 const {
   indentRule,
   scripts,
-  prettierConfig,
   eslintConfig,
+  prettierConfig,
   nodemonConfig,
   dependencies,
   devDependencies,
   gitIgnoreConfig
 } = require('../config')
 
-// const eslintConfig = require('../eslint.config.js')
-
 // Get version from package.json
 const version = JSON.stringify(require('../package.json').version)
+
 // Get current working directory
 const currentDirectory = process.cwd()
+
 // Get path to package.json
 const packageJsonPath = path.join(currentDirectory, 'package.json')
 const esLintConfigPath = path.join(currentDirectory, 'eslint.config.js')
