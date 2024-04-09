@@ -3,11 +3,7 @@ const eslintConfigPrettier = require('eslint-config-prettier')
 const styleGuide = require('eslint-config-standard')
 
 module.exports = [
-  eslintConfigPrettier,
-  {},
-
   ...[].concat(styleGuide),
-  {},
 
   {
     languageOptions: {
