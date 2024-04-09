@@ -6,13 +6,6 @@ module.exports = [
   eslintConfigPrettier,
   standard,
   {
-    languageOptions: {
-      ecmaVersion: 'latest',
-      ecmaFeatures: {
-        jsx: true,
-        ejs: true
-      }
-    },
     plugins: { eslintPluginPrettierRecommended },
     rules: {
       'no-console': 0
