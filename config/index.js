@@ -14,7 +14,6 @@ module.exports = {
 	},
 
 	eslintConfig: {
-		root: true,
 		env: {
 			browser: true,
 			commonjs: true,
