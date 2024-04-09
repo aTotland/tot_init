@@ -24,7 +24,7 @@ const version = JSON.stringify(require('../package.json').version)
 const currentDirectory = process.cwd()
 // Get path to package.json
 const packageJsonPath = path.join(currentDirectory, 'package.json')
-const esLintConfigPath = path.join(currentDirectory, 'eslint.config')
+const esLintConfigPath = path.join(currentDirectory, 'eslint.config.js')
 
 // Function to revert changes on SIGINT in case of errors
 const revertChanges = () => {
