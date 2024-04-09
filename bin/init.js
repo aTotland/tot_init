@@ -102,7 +102,7 @@ const updatePackageJson = (existingPackageJson) => {
 }
 
 // Function to turn eslint.config.js into a string
-const eslintConfigJSON = JSON.stringify(eslintConfig, null, 2)
+// const eslintConfigJSON = JSON.stringify(eslintConfig, null, 2)
 
 // Function to write eslint.config.js
 const writeEsLintConfig = (esLintPath, content) => {
