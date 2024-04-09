@@ -2,13 +2,4 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 const eslintConfigPrettier = require('eslint-config-prettier')
 const standard = require('eslint-config-standard')
 
-module.exports = [
-  eslintConfigPrettier,
-  standard,
-  {
-    plugins: { eslintPluginPrettierRecommended },
-    rules: {
-      'no-console': 0
-    }
-  }
-]
+module.exports = [eslintConfigPrettier, standard]
