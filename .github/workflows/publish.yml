@@ -50,8 +50,8 @@ jobs:
           tag: 'latest'
           dry-run: false
           registry: 'https://registry.npmjs.org'
-
-      - if: ${{ steps.publish.outputs.type }}
+      - name: Publish status
+        if: ${{ steps.publish.outputs.type }}
         run: echo "Published ${{ steps.publish.outputs.type }} ${{ steps.publish.outputs.name }}@${{ steps.publish.outputs.version }}"
 
         # ENV
