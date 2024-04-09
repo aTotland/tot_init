@@ -1,6 +1,6 @@
 {
 	"name": "tot_init",
-	"version": "2.0.5",
+	"version": "2.0.6",
 	"description": "project initialization tool",
 	"author": "A. Totland",
 	"license": "MIT",
@@ -17,7 +17,7 @@
 		"reset": "git reset --hard && git clean -fd ",
 		"up": "npm-check -u && npm audit fix"
 	},
-	"packageManager": "npm@10.1.0",
+	"packageManager": "npm@10.5.1",
 	"eslintConfig": {
 		"root": true,
 		"env": {
