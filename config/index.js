@@ -12,7 +12,6 @@ module.exports = {
     release: 'lint && bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
     check: 'ncu'
-
   },
 
   prettierConfig: {
