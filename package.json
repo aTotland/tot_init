@@ -1,6 +1,6 @@
 {
   "name": "tot_init",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "project initialization tool",
   "author": "A. Totland",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:prettier": "prettier --write .",
     "lint:eslint": "eslint --fix .",
-    "lint:standard": "standard --fix .",
+    "standard": "standard --fix .",
     "release": "bumpp -r --all --commit=\"release: %s\" --tag=\"%s\"",
     "reset": "git reset --hard && git clean -fd ",
     "check": "ncu"
