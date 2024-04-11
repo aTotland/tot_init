@@ -11,7 +11,8 @@ module.exports = {
     'lint:standard': 'standard --fix',
     release: 'bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
-    up: 'npx npm-check -u && npm audit fix'
+    check: 'ncu'
+
   },
 
   prettierConfig: {
@@ -29,12 +30,9 @@ module.exports = {
   eslintConfig: `
   const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
   const eslintConfigPrettier = require('eslint-config-prettier')
-  // const styleGuide = require('eslint-config-standard')
-
+  
   module.exports = [
     eslintConfigPrettier,
-    // ...[].concat(styleGuide)
-
     {
       languageOptions: {
         parserOptions: {
@@ -45,9 +43,11 @@ module.exports = {
           }
         }
       },
+  
       plugins: { eslintPluginPrettierRecommended },
       rules: {
-        'no-console': 0
+        'no-console': 0,
+        'space-before-function-paren': ['error', 'always']
       }
     }
   ]
@@ -70,10 +70,12 @@ module.exports = {
     'eslint-config-eslint': '^9.0.0',
     'eslint-plugin-prettier': '^5.1.3',
     'eslint-config-prettier': '^9.1.0',
-    'npm-check': '^6.0.1',
+    'npm-check-updates': '^16.14.18',
+    nodemon: '^3.1.0',
     'npm-run-all': '^4.1.5',
     prettier: '^3.2.5',
     'prettier-plugin-ejs': '^1.0.3',
+    snazzy: '^9.0.0',
     standard: '*'
   },
 
