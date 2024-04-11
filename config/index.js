@@ -8,8 +8,8 @@ module.exports = {
     lint: 'npm-run-all "lint:*"',
     'lint:prettier': 'prettier --write .',
     'lint:eslint': 'eslint --fix .',
-    'lint:standard': 'standard --fix',
-    release: 'bumpp -r --all --commit="release: %s" --tag="%s"',
+    standard: 'standard --fix',
+    release: 'lint && bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
     check: 'ncu'
 
