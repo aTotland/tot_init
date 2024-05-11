@@ -92,9 +92,6 @@ const updatePackageJson = (existingPackageJson) => {
         ...existingPackageJson.prettier,
         ...prettierConfig
       },
-      nodemonConfig: {
-        ...existingPackageJson.nodemonConfig
-      },
       dependencies: {
         ...existingPackageJson.dependencies,
         ...dependencies
