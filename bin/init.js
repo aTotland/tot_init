@@ -14,7 +14,7 @@ const {
   devDependencies,
   gitIgnoreConfig
 } = require('../config')
-const { stdout } = require('process')
+const { stdout, stderr } = require('process')
 
 // Get version from package.json
 const version = JSON.stringify(require('../package.json').version)
@@ -159,7 +159,7 @@ const successDisplay = () => {
 
 // Display error message to user
 const errorDisplay = (error) => {
-  console.error(`${error.message}`)
+  stderr(`${error.message}`)
 }
 
 const init = () => {
