@@ -6,6 +6,7 @@ module.exports = {
     'lint:prettier': 'prettier --write .',
     'lint:eslint': 'eslint --fix .',
     'lint:standard': 'standard --fix',
+    'lint:next': 'next lint',
     release: 'npm run lint && bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
     check: 'ncu'
@@ -26,8 +27,8 @@ module.exports = {
   eslintConfig: `
   module.exports = {
     extends: [
-      'next',
-      'next/core-web-vitals',
+      //'next',
+      //'next/core-web-vitals',
       'plugin:prettier/recommended',
       'eslint-config-prettier',
       'eslint-config-standard'
@@ -36,7 +37,6 @@ module.exports = {
       'no-unused-vars': 'error', // Report unused variables
       'no-console': 'error', // Disallow console logs
       'no-undef': 'error' // Report undefined variables
-      'no-html-link-for-pages': 'off' // Disable no-html-link-for-pages rule
     }
   }
   `,
