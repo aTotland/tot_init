@@ -3,7 +3,6 @@
 const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs-extra')
-const { stdout } = require('process')
 
 // Import configurations
 const {
@@ -28,30 +27,30 @@ const esLintConfigPath = path.join(currentDirectory, '.eslintrc.js')
 
 // Function to revert changes on SIGINT in case of errors
 const revertChanges = () => {
-  stdout('🔄 - Reverting changes...')
+  console.log('🔄 - Reverting changes...')
   execSync('git reset --hard && git clean -fd')
-  stdout('✅ - Reverted changes')
+  console.log('✅ - Reverted changes')
   process.exit(1)
 }
 
 // Function to check git status
 const checkGitStatus = () => {
-  stdout('🔄 - Checking git status...')
+  console.log('🔄 - Checking git status...')
   const gitStatus = execSync('git status --porcelain').toString()
   if (gitStatus.trim() !== '') {
-    stdout(
+    console.log(
       '❌  - There are uncommitted changes! Make a new commit before running again...'
     )
     process.exit(1)
   }
-  stdout('✅ - There are no uncommitted changes.')
+  console.log('✅ - There are no uncommitted changes.')
 }
 
 const lint = () => {
   try {
-    stdout('🔄 - Running lint...')
+    console.log('🔄 - Running lint...')
     execSync('npm run lint')
-    stdout('✅ - Linting passed!')
+    console.log('✅ - Linting passed!')
   } catch (error) {
     throw Error(`❌ - Could not pass lint: ${error}`)
   }
@@ -59,12 +58,12 @@ const lint = () => {
 
 // Function to add .gitignore
 const configGitIgnore = async () => {
-  stdout('🔄 - Adding .gitignore...')
+  console.log('🔄 - Adding .gitignore...')
   const { environments } = gitIgnoreConfig
   try {
     // gitignore.io for easy setup and adaptability
     execSync(`npx add-gitignore ${environments.join(' ')}`)
-    stdout('✅ - Added .gitignore')
+    console.log('✅ - Added .gitignore')
   } catch (error) {
     throw Error(`❌  - Could not load .gitignore content: ${error}`)
   }
@@ -80,7 +79,7 @@ const readPackageJson = (packageJson) => {
 
 // Function to update package.json if it exists
 const updatePackageJson = (existingPackageJson) => {
-  stdout('🔄 - Updating package.json scripts, configs & dependencies...')
+  console.log('🔄 - Updating package.json scripts, configs & dependencies...')
   try {
     return {
       ...existingPackageJson,
@@ -112,29 +111,29 @@ const updatePackageJson = (existingPackageJson) => {
 // Function to write eslint.config.js
 const writeEsLintConfig = (esLintPath, content) => {
   fs.writeFileSync(esLintPath, content, indentRule)
-  stdout('✅ - Added configs to .eslintrc.js')
+  console.log('✅ - Added configs to .eslintrc.js')
 }
 
 // Function to write package.json
 const writePackageJson = (packagePath, content) => {
   fs.writeJsonSync(packagePath, content, indentRule)
-  stdout('✅ - Added configs to package.json')
+  console.log('✅ - Added configs to package.json')
 }
 
 const runNpmInstall = () => {
-  stdout('🔄 - Installing dependencies...')
+  console.log('🔄 - Installing dependencies...')
   try {
     execSync('npm i')
-    stdout('✅ - Installed dependencies')
+    console.log('✅ - Installed dependencies')
     execSync('npm up')
-    stdout('✅ - Updated dependencies')
+    console.log('✅ - Updated dependencies')
   } catch (error) {
     throw Error(`❌ - Could not install dependencies: ${error}`)
   }
 }
 
 const runConfig = () => {
-  stdout('🔄 - Setting up configuration files ...')
+  console.log('🔄 - Setting up configuration files ...')
   try {
     // Usage of functions to add configs and dependencies to package.json
     const existingPackageJson = readPackageJson(packageJsonPath)
@@ -143,7 +142,7 @@ const runConfig = () => {
     writeEsLintConfig(esLintConfigPath, eslintConfig)
     configGitIgnore()
     runNpmInstall()
-    stdout('✅ - Setup finished!')
+    console.log('✅ - Setup finished!')
   } catch (error) {
     throw Error(`❌ - Couldn't set up configuration files: ${error}`)
   }
@@ -151,20 +150,20 @@ const runConfig = () => {
 
 // Display success message to user
 const successDisplay = () => {
-  stdout('📦 - It is recommended to add these editor plugins:')
-  stdout('➡️  - ESLint')
-  stdout('➡️  - Prettier')
-  stdout('➡️  - StandardJS')
+  console.log('📦 - It is recommended to add these editor plugins:')
+  console.log('➡️  - ESLint')
+  console.log('➡️  - Prettier')
+  console.log('➡️  - StandardJS')
 }
 
 // Display error message to user
 const errorDisplay = (error) => {
-  stdout(`${error.message}`)
+  console.log(`${error.message}`)
 }
 
 const init = () => {
   try {
-    stdout(`🚀 - Starting... ${version}`)
+    console.log(`🚀 - Starting... ${version}`)
     checkGitStatus()
     runConfig()
     lint()
