@@ -88,7 +88,16 @@ module.exports = {
       'macos',
       'node',
       'visualstudiocode',
-      'windows'
+      'windows',
+      'yarn',
+      'npm',
+      'pnpm',
+      'prettier',
+      'eslint',
+      'standard',
+      'vscode',
+      'node',
+      'vercel'
     ]
   }
 }
