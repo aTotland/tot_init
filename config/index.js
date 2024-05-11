@@ -6,6 +6,7 @@ module.exports = {
     'lint:prettier': 'prettier --write .',
     'lint:eslint': 'eslint --fix .',
     'lint:standard': 'standard --fix',
+    'lint:next': 'next lint',
     release: 'npm run lint && bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
     check: 'ncu'
@@ -54,24 +55,30 @@ module.exports = {
     }
   ]
   `,
+
   dependencies: {
     dotenv: '^16.3.1',
-    'fs-extra': '^11.2.0'
+    'fs-extra': '^11.2.0',
+    next: '14.2.3',
+    react: '^18',
+    'react-dom': '^18'
   },
 
   devDependencies: {
     bumpp: '^9.4.0',
-    eslint: '^9.0.0',
+    eslint: '^8',
     'eslint-config-eslint': '^9.0.0',
+    'eslint-config-next': '14.2.3',
     'eslint-plugin-prettier': '^5.1.3',
     'eslint-config-prettier': '^9.1.0',
     'npm-check-updates': '^16.14.18',
-    nodemon: '^3.1.0',
     'npm-run-all': '^4.1.5',
+    postcss: '^8',
     prettier: '^3.2.5',
     'prettier-plugin-ejs': '^1.0.3',
     snazzy: '^9.0.0',
-    standard: '*'
+    standard: '*',
+    tailwindcss: '^3.4.1'
   },
 
   gitIgnoreConfig: {
