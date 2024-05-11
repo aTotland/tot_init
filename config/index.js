@@ -6,7 +6,6 @@ module.exports = {
     'lint:prettier': 'prettier --write .',
     'lint:eslint': 'eslint --fix .',
     'lint:standard': 'standard --fix',
-    'lint:next': 'next lint',
     release: 'npm run lint && bumpp -r --all --commit="release: %s" --tag="%s"',
     reset: 'git reset --hard && git clean -fd ',
     check: 'ncu'
