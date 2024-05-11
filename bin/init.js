@@ -24,7 +24,7 @@ const currentDirectory = process.cwd()
 
 // Get path to package.json
 const packageJsonPath = path.join(currentDirectory, 'package.json')
-const esLintConfigPath = path.join(currentDirectory, 'eslint.config.js')
+const esLintConfigPath = path.join(currentDirectory, '.eslintrc.js')
 
 // Function to revert changes on SIGINT in case of errors
 const revertChanges = () => {
@@ -112,7 +112,7 @@ const updatePackageJson = (existingPackageJson) => {
 // Function to write eslint.config.js
 const writeEsLintConfig = (esLintPath, content) => {
   fs.writeFileSync(esLintPath, content, indentRule)
-  info('✅ - Added configs to eslint.config.js')
+  info('✅ - Added configs to .eslintrc.js')
 }
 
 // Function to write package.json
