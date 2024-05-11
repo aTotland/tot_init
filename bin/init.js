@@ -44,7 +44,6 @@ const checkGitStatus = () => {
     )
     process.exit(1)
   }
-  process.on('SIGINT', revertChanges)
   info('✅ - There are no uncommitted changes.')
 }
 
