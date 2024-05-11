@@ -159,7 +159,7 @@ const successDisplay = () => {
 
 // Display error message to user
 const errorDisplay = (error) => {
-  stderr(`${error.message}`)
+  stdout(`${error.message}`)
 }
 
 const init = () => {
