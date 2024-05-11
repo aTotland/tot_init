@@ -3,6 +3,7 @@
 const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs-extra')
+const { stdout } = require('process')
 
 // Import configurations
 const {
@@ -14,7 +15,6 @@ const {
   devDependencies,
   gitIgnoreConfig
 } = require('../config')
-const { stdout, stderr } = require('process')
 
 // Get version from package.json
 const version = JSON.stringify(require('../package.json').version)
