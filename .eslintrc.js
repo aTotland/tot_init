@@ -10,6 +10,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'error', // Report unused variables
-    'no-console': 'error' // Disallow console logs
+    'no-console': 'error', // Disallow console logs
+    'no-undef': 'error' // Report undefined variables
   }
 }
