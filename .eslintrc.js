@@ -2,8 +2,8 @@
 
 module.exports = {
   extends: [
-    //'next',
-    //'next/core-web-vitals',
+    // 'next',
+    // 'next/core-web-vitals',
     'plugin:prettier/recommended',
     'eslint-config-prettier',
     'eslint-config-standard'
