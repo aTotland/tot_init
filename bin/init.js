@@ -164,6 +164,7 @@ const errorDisplay = (error) => {
 
 const init = () => {
   try {
+    stdout(`🚀 - Starting... ${version}`)
     checkGitStatus()
     runConfig()
     lint()
