@@ -11,7 +11,6 @@ const {
   scripts,
   eslintConfig,
   prettierConfig,
-  nodemonConfig,
   dependencies,
   devDependencies,
   gitIgnoreConfig
@@ -95,8 +94,7 @@ const updatePackageJson = (existingPackageJson) => {
         ...prettierConfig
       },
       nodemonConfig: {
-        ...existingPackageJson.nodemonConfig,
-        ...nodemonConfig
+        ...existingPackageJson.nodemonConfig
       },
       dependencies: {
         ...existingPackageJson.dependencies,

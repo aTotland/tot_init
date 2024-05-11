@@ -2,9 +2,6 @@ module.exports = {
   indentRule: { spaces: 2 },
 
   scripts: {
-    start: 'node ./bin',
-    dev: 'npx nodemon ./bin',
-    debug: 'DEBUG=* npx nodemon ./bin',
     lint: 'npm-run-all "lint:*"',
     'lint:prettier': 'prettier --write .',
     'lint:eslint': 'eslint --fix .',
@@ -29,9 +26,17 @@ module.exports = {
   eslintConfig: `
   const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
   const eslintConfigPrettier = require('eslint-config-prettier')
+  const next = require('next')
+  const nextCoreWebVitals = require('next/core-web-vitals')
+  
+  // const styleGuide = require('eslint-config-standard')
   
   module.exports = [
     eslintConfigPrettier,
+    next,
+    nextCoreWebVitals,
+    // ...[].concat(styleGuide)
+  
     {
       languageOptions: {
         parserOptions: {
@@ -42,22 +47,13 @@ module.exports = {
           }
         }
       },
-  
       plugins: { eslintPluginPrettierRecommended },
       rules: {
-        'no-console': 0,
-        'space-before-function-paren': ['error', 'always']
+        'no-console': 0
       }
     }
   ]
   `,
-
-  nodemonConfig: {
-    watch: '.',
-    ext: '.**',
-    ignore: []
-  },
-
   dependencies: {
     dotenv: '^16.3.1',
     'fs-extra': '^11.2.0'
